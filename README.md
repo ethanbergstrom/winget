@@ -1,6 +1,8 @@
 # Chocolatier
 Chocolatier is Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository. The provider is heavily influenced by the work of @jianyunt and the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/14pwjwch40ww0cxd?svg=true)](https://ci.appveyor.com/project/ethanbergstrom/chocolatier)
+
 ## Get the Chocolatier installed
 ```PowerShell
 Find-PackageProvider Chocolatier -verbose
