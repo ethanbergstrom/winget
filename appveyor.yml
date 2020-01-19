@@ -1,0 +1,19 @@
+version: 1.0.{build}
+os:
+- WMF 5
+configuration: Release
+
+build: false
+
+platform: Any CPU
+# Install Pester
+install:
+    - cinst -y pester
+
+clone_folder: c:\projects\Chocolatier
+
+before_test:
+- ps: >-
+    Copy-Item -Recurse "c:\projects\Chocolatier\" "$Env:ProgramFiles\WindowsPowerShell\Modules\" -Force -Verbose
+
+    & "c:\projects\Chocolatier\Test\Chocolatier.tests.ps1"

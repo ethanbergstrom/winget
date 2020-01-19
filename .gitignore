@@ -1,0 +1,4 @@
+*TestsResults.xml
+*.nupkg
+chocolatey.log
+settings.json
