@@ -1,5 +1,5 @@
 # Chocolatier
-Chocolatier provider allows to download Chocolatey packages from any NuGet repository via OneGet. The provider is heavily influenced by the work of @jianyunt and the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
+Chocolatier is Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository. The provider is heavily influenced by the work of @jianyunt and the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
 
 ## Get the Chocolatier installed
 ```PowerShell
