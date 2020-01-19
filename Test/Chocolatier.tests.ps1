@@ -146,7 +146,7 @@ Describe "Chocolatier support for 'latest' RequiredVersion value with DSC suppor
 	}
 
 	It "does not find the 'latest' locally installed version if an outdated version is installed" {
-		$a = install-package -name $package -requiredVersion $version -verbose -ProviderName $Chocolatier -Force -AdditionalArguments '--all-versions'
+		$a = install-package -name $package -requiredVersion $version -verbose -ProviderName $Chocolatier -Force
 		$a.Name -contains $package | Should Be $true
 
 		$b = get-package $package -requiredVersion 'latest' -verbose -provider $Chocolatier -ErrorAction SilentlyContinue
