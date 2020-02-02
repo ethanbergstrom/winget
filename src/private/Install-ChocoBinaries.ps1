@@ -13,7 +13,8 @@ function Install-ChocoBinaries {
 			-ExceptionObject $PSEdition
 	}
 
-	if (-not $request.ShouldContinue($LocalizedData.InstallChocoExeShouldContinueQuery, $LocalizedData.InstallChocoExeShouldContinueCaption)) {
+	# If the user opts not to install Chocolatey, throw an exception
+	if (-not ((Get-ForceProperty) -or $request.ShouldContinue($LocalizedData.InstallChocoExeShouldContinueQuery, $LocalizedData.InstallChocoExeShouldContinueCaption))) {
 		ThrowError -ExceptionName 'System.OperationCanceledException' `
 			-ExceptionMessage ($LocalizedData.UserDeclined -f "install") `
 			-ErrorId 'UserDeclined' `

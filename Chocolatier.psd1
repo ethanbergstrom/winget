@@ -1,6 +1,6 @@
 @{
 	RootModule = 'Chocolatier.psm1'
-	ModuleVersion = '1.0.1'
+	ModuleVersion = '1.0.2'
 	GUID = 'c1735ed7-8b2f-426a-8cbc-b7feb6b8288d'
 	Author = 'Ethan Bergstrom'
 	Copyright = ''
@@ -25,7 +25,7 @@
 			ProjectUri = 'https://github.com/ethanbergstrom/Chocolatier'
 
 			# ReleaseNotes of this module
-			ReleaseNotes = 'Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository.'
+			ReleaseNotes = 'Install Choco automatically with -force flag (https://github.com/ethanbergstrom/Chocolatier/issues/1)'
 		}
 	}
 }
