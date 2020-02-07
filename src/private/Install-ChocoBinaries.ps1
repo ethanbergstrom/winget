@@ -25,6 +25,7 @@ function Install-ChocoBinaries {
 	# install choco based on https://chocolatey.org/install#before-you-install
 	try {
 		Write-Verbose 'Installing Chocolatey'
+		[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 		Invoke-WebRequest 'https://chocolatey.org/install.ps1' -UseBasicParsing | Invoke-Expression > $null
 	} catch {
 		ThrowError -ExceptionName 'System.OperationCanceledException' `
