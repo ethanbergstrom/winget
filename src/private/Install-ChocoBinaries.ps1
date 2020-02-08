@@ -25,7 +25,15 @@ function Install-ChocoBinaries {
 	# install choco based on https://chocolatey.org/install#before-you-install
 	try {
 		Write-Verbose 'Installing Chocolatey'
-		[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+
+		# chocolatey.org requires TLS 1.2 (or newer) ciphers to establish a connection.
+		# Older versions of PowerShell / .NET are opinionated about which ciphers to support, while newer versions default to whatever ciphers the OS supports.
+		# If .NET isn't falling back on the OS defaults, explicitly add TLS 1.2 as a supported cipher for this session, otherwise let the OS take care of it.
+		# https://docs.microsoft.com/en-us/security/solving-tls1-problem#update-windows-powershell-scripts-or-related-registry-settings
+		if (-not ([Net.ServicePointManager]::SecurityProtocol -eq [Net.SecurityProtocolType]::SystemDefault)) {
+			[Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12)
+		}
+
 		Invoke-WebRequest 'https://chocolatey.org/install.ps1' -UseBasicParsing | Invoke-Expression > $null
 	} catch {
 		ThrowError -ExceptionName 'System.OperationCanceledException' `
