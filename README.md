@@ -79,7 +79,7 @@ Configuration ChocoNodeJS {
 
 ## Keep packages up to date
 A common complaint of PackageManagement/OneGet is it doesn't allow for updating installed packages, while Chocolatey does.
-In order to reconile the two, Chocolatier has a reserved keyword 'latest' that when passed as a Required Version can compare the version of what's currently installed against what's in the repository.
+  In order to reconile the two, Chocolatier has a reserved keyword 'latest' that when passed as a Required Version can compare the version of what's currently installed against what's in the repository.
 ```PowerShell
 PS C:\Users\ethan> Install-Package curl -RequiredVersion 7.60.0 -ProviderName chocolatier -Force
 
