@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 * Choco.exe installed automatically without any user prompts if -Force flag is passed (#1)
 
-## [1.0.1] - 2020-02-09 - The Great Fork
+## [1.0.1] - 2020-01-19 - The Great Fork
 ### Added
 * Searching/installing/managing multiple Chocolatey sources
 * DSC Compatibility, including additional package arguments
