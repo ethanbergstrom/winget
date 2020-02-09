@@ -131,11 +131,12 @@ Name                           Version          Source                          
 curl                           7.68.0           Chocolatey                       Chocolatier
 
 
-PS C:\Users\ethan> Find-Package curl -RequiredVersion latest -ProviderName chocolatier
+PS C:\Users\ethan> Get-Package curl -RequiredVersion latest -ProviderName chocolatier
 
-Name                           Version          Source           Summary
-----                           -------          ------           -------
-curl                           7.68.0           chocolatey
+Name                           Version          Source                           ProviderName
+----                           -------          ------                           ------------
+curl                           7.68.0           Chocolatey                       Chocolatier
+
 
 ```
 
