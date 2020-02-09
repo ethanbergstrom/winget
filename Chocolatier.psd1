@@ -25,7 +25,7 @@
 			ProjectUri = 'https://github.com/ethanbergstrom/Chocolatier'
 
 			# ReleaseNotes of this module
-			ReleaseNotes = 'Install Choco automatically with -force flag (https://github.com/ethanbergstrom/Chocolatier/issues/1)'
+			ReleaseNotes = 'Choco.exe once again installs automatically after TLS 1.2 changes to chocolatey.org (https://github.com/ethanbergstrom/Chocolatier/issues/3)'
 		}
 	}
 }
