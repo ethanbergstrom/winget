@@ -137,7 +137,15 @@ Name                           Version          Source                          
 ----                           -------          ------                           ------------
 curl                           7.68.0           Chocolatey                       Chocolatier
 
+```
 
+This feature can be combined with a PackageManagement-compatible configuration management system (ex: PowerShell DSC) to regularly keep certain packages up to date:
+```PowerShell
+	PackageManagement SysInternals {
+		Name = 'sysinternals'
+		RequiredVersion = 'latest'
+		ProviderName = 'chocolatier'
+	}
 ```
 
 ## Known Issues
