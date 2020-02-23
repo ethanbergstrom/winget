@@ -130,6 +130,14 @@ Configuration MyNode {
 }
 ```
 
+**Please note** - Since Chocolatey doesn't track source information of installed packages, and since PackageManagement doesn't support passing source information when invoking `Get-Package`, the 'latest' functionality **will not work** if Chocolatey.org is removed as a source **and** multiple custom sources are defined.
+
+Furthermore, if both Chocolatey.org and a custom source are configured, the custom source **will be ignored** when the 'latest' required version is used with `Get-Package`.
+
+If using the 'latest' functionality, best practice is to either:
+* use the default Chocolatey.org source
+* unregister the default Chocolatey.org source in favor of a **single** custom source
+
 ## Known Issues
 Currently Chocolatier works on Full CLR.
 It is not supported on CoreClr.
