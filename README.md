@@ -117,10 +117,15 @@ This feature can be combined with a PackageManagement-compatible configuration m
 ```PowerShell
 Configuration MyNode {
 	Import-DscResource -Name PackageManagement
+	PackageManagement Chocolatier {
+		Name = 'Chocolatier'
+		Source = 'PSGallery'
+	}
 	PackageManagement SysInternals {
 		Name = 'sysinternals'
 		RequiredVersion = 'latest'
 		ProviderName = 'chocolatier'
+		DependsOn = '[PackageManagement]Chocolatier'
 	}
 }
 ```
