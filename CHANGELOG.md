@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.0.4] - 2020-02-23
+### Added
+* Package and Choco.exe installation can run without confirmation prompts by passing the `-AcceptLicense` flag (#4)
+
 ## [1.0.3] - 2020-02-08
 ### Fixed
 * Choco.exe once again installs automatically after TLS 1.2 changes to chocolatey.org (#3)
