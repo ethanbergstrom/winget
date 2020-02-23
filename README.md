@@ -113,7 +113,7 @@ curl                           7.68.0           Chocolatey                      
 
 ```
 
-This feature can be combined with a PackageManagement-compatible configuration management system (ex: PowerShell DSC) to regularly keep certain packages up to date:
+This feature can be combined with a PackageManagement-compatible configuration management system (ex: PowerShell DSC LCM in 'ApplyAndAutoCorrect' mode) to regularly keep certain packages up to date:
 ```PowerShell
 Configuration MyNode {
 	Import-DscResource -Name PackageManagement
