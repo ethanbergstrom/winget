@@ -3,7 +3,7 @@ Chocolatier is Package Management (OneGet) provider that facilitates installing 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/14pwjwch40ww0cxd?svg=true)](https://ci.appveyor.com/project/ethanbergstrom/chocolatier)
 
-## Get the Chocolatier installed
+## Install Chocolatier
 ```PowerShell
 Find-PackageProvider Chocolatier -verbose
 
