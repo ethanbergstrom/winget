@@ -53,7 +53,8 @@ If you need to pass in some of choco arguments to the Find, Install, Get and UnI
 ## DSC Compatibility
 Fully compatible with the PackageManagement DSC resources
 ```PowerShell
-Configuration ChocoNodeJS {
+Configuration MyNode {
+	Import-DscResource -Name PackageManagement,PackageManagementSource 
 	PackageManagement Chocolatier {
 		Name = 'Chocolatier'
 		Source = 'PSGallery'
@@ -114,10 +115,13 @@ curl                           7.68.0           Chocolatey                      
 
 This feature can be combined with a PackageManagement-compatible configuration management system (ex: PowerShell DSC) to regularly keep certain packages up to date:
 ```PowerShell
-PackageManagement SysInternals {
-	Name = 'sysinternals'
-	RequiredVersion = 'latest'
-	ProviderName = 'chocolatier'
+Configuration MyNode {
+	Import-DscResource -Name PackageManagement
+	PackageManagement SysInternals {
+		Name = 'sysinternals'
+		RequiredVersion = 'latest'
+		ProviderName = 'chocolatier'
+	}
 }
 ```
 
