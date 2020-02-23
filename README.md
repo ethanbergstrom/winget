@@ -16,33 +16,29 @@ Get-PackageProvider -verbose
 ```
 
 ## Sample usages
-### Find-Package
+### Search for a package
 ```PowerShell
 Find-Package -ProviderName Chocolatier -name  nodejs
 
 Find-Package -ProviderName Chocolatier -name firefox*
 ```
 
-### Install-Package
+### Install a package
 ```PowerShell
 Find-Package nodejs -verbose -provider Chocolatier -AdditionalArguments --exact | Install-Package
 
 Install-Package -name 7zip -verbose -ProviderName Chocolatier
 ```
-### Get-Package
+### Get list of installed packages
 ```PowerShell
 Get-Package nodejs -verbose -provider Chocolatier
 ```
-### Uninstall-Package
+### Uninstall a package
 ```PowerShell
 Get-Package nodejs -provider Chocolatier -verbose | Uninstall-Package -AdditionalArguments '-y --remove-dependencies' -Verbose
 ```
-### Save-Package
 
-Save-Package is not supported for Chocolatier provider.
-It is because Chocolatier is a wrapper of choco.exe which currently does not support downloading packages without special licensing.
-
-### Register-PackageSource / Unregister-PackageSource
+### Manage package sources
 ```PowerShell
 Register-PackageSource privateRepo -provider Chocolatier -location 'https://somewhere/out/there/api/v2/'
 Find-Package nodejs -verbose -provider Chocolatier -source privateRepo -AdditionalArguments --exact | Install-Package
@@ -54,8 +50,8 @@ OneGet integrates with Chocolatey sources to manage source information
 ## Pass in choco arguments
 If you need to pass in some of choco arguments to the Find, Install, Get and UnInstall-Package cmdlets, you can use AdditionalArguments PowerShell property.
 
-## DSC Compatability
-Fully compatable with the PackageManagement DSC resources
+## DSC Compatibility
+Fully compatible with the PackageManagement DSC resources
 ```PowerShell
 Configuration ChocoNodeJS {
 	PackageManagement Chocolatier {
@@ -79,7 +75,7 @@ Configuration ChocoNodeJS {
 
 ## Keep packages up to date
 A common complaint of PackageManagement/OneGet is it doesn't allow for updating installed packages, while Chocolatey does.
-  In order to reconile the two, Chocolatier has a reserved keyword 'latest' that when passed as a Required Version can compare the version of what's currently installed against what's in the repository.
+  In order to reconcile the two, Chocolatier has a reserved keyword 'latest' that when passed as a Required Version can compare the version of what's currently installed against what's in the repository.
 ```PowerShell
 
 PS C:\Users\ethan> Find-Package curl -RequiredVersion latest -ProviderName chocolatier
@@ -130,6 +126,10 @@ Currently Chocolatier works on Full CLR.
 It is not supported on CoreClr.
 This means Chocolatier provider is not supported on Nano server or Linux OSs.
 The primarily reason is that the current version of choco.exe does not seem to support on CoreClr yet.
+
+### Save a package
+Save-Package is not supported for Chocolatier provider.
+It is because Chocolatier is a wrapper of choco.exe which currently does not support downloading packages without special licensing.
 
 ## Legal and Licensing
 Chocolatier is licensed under the [MIT license](./LICENSE.txt).
