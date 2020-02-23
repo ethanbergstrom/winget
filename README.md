@@ -156,6 +156,7 @@ Configuration MyNode {
 		Ensure = 'Absent'
 		DependsOn = '[PackageManagement]Chocolatier'
 	}
+	# The source information wont actually be used by the Get-Package step of the PackageManagement DSC resource check, but it helps make clear to the reader where the package should come from
 	PackageManagement NodeJS {
 		Name = 'nodejs'
 		Source = 'privateRepo'
