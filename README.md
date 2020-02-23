@@ -1,5 +1,5 @@
 # Chocolatier
-Chocolatier is Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository. The provider is heavily influenced by the work of @jianyunt and the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
+Chocolatier is Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository. The provider is heavily influenced by the work of [Jianyun](https://github.com/jianyunt) and the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/14pwjwch40ww0cxd?svg=true)](https://ci.appveyor.com/project/ethanbergstrom/chocolatier)
 
@@ -45,7 +45,7 @@ Find-Package nodejs -verbose -provider Chocolatier -source privateRepo -Addition
 Unregister-PackageSource privateRepo -provider Chocolatier
 ```
 
-OneGet integrates with Chocolatey sources to manage source information
+Chocolatier integrates with Choco.exe to manage and store source information
 
 ## Pass in choco arguments
 If you need to pass in some of choco arguments to the Find, Install, Get and UnInstall-Package cmdlets, you can use AdditionalArguments PowerShell property.
