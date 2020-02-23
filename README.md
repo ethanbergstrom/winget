@@ -134,6 +134,37 @@ Configuration MyNode {
 
 Furthermore, if both Chocolatey.org and a custom source are configured, the custom source **will be ignored** when the 'latest' required version is used with `Get-Package`.
 
+Example PowerShell DSC configuration using the 'latest' required version with a custom source:
+
+```PowerShell
+Configuration MyNode {
+	Import-DscResource -Name PackageManagement,PackageManagementSource 
+	PackageManagement Chocolatier {
+		Name = 'Chocolatier'
+		Source = 'PSGallery'
+	}
+	PackageManagementSource ChocoPrivateRepo {
+		Name = 'privateRepo'
+		ProviderName = 'Chocolatier'
+		SourceLocation = 'https://somewhere/out/there/api/v2/'
+		InstallationPolicy = 'Trusted'
+		DependsOn = '[PackageManagement]Chocolatier'
+	}
+	PackageManagementSource ChocolateyRepo {
+		Name = 'Chocolatey'
+		ProviderName = 'Chocolatier'
+		Ensure = 'Absent'
+		DependsOn = '[PackageManagement]Chocolatier'
+	}
+	PackageManagement NodeJS {
+		Name = 'nodejs'
+		Source = 'privateRepo'
+		RequiredVersion = 'latest'
+		DependsOn = @('[PackageManagementSource]ChocoPrivateRepo', '[PackageManagementSource]ChocolateyRepo')
+	}
+}
+```
+
 If using the 'latest' functionality, best practice is to either:
 * use the default Chocolatey.org source
 * unregister the default Chocolatey.org source in favor of a **single** custom source
