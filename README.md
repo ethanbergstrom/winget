@@ -177,8 +177,7 @@ This means Chocolatier provider is not supported on Nano server or Linux OSs.
 The primarily reason is that the current version of choco.exe does not seem to support on CoreClr yet.
 
 ### Save a package
-Save-Package is not supported for Chocolatier provider.
-It is because Chocolatier is a wrapper of choco.exe which currently does not support downloading packages without special licensing.
+Save-Package is not supported with the Chocolatier provider, due to Chocolatey not supporting package downloads without special licensing.
 
 ## Legal and Licensing
 Chocolatier is licensed under the [MIT license](./LICENSE.txt).
