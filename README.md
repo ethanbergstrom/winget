@@ -5,45 +5,47 @@ Chocolatier is Package Management (OneGet) provider that facilitates installing 
 
 ## Install Chocolatier
 ```PowerShell
-Find-PackageProvider Chocolatier -verbose
-
-Install-PackageProvider Chocolatier -verbose
+Install-PackageProvider Chocolatier -Force
 ```
 
 ## Sample usages
 ### Search for a package
 ```PowerShell
-Find-Package -ProviderName Chocolatier -name  nodejs
+Find-Package -ProviderName Chocolatier -Name nodejs
 
-Find-Package -ProviderName Chocolatier -name firefox*
+Find-Package -ProviderName Chocolatier -Name firefox*
 ```
 
 ### Install a package
 ```PowerShell
-Find-Package nodejs -verbose -provider Chocolatier -AdditionalArguments --exact | Install-Package
+Find-Package nodejs -Verbose -Provider Chocolatier -AdditionalArguments --Exact | Install-Package
 
-Install-Package -name 7zip -verbose -ProviderName Chocolatier
+Install-Package -Name 7zip -Verbose -ProviderName Chocolatier
 ```
 ### Get list of installed packages
 ```PowerShell
-Get-Package nodejs -verbose -provider Chocolatier
+Get-Package nodejs -Verbose -Provider Chocolatier
 ```
 ### Uninstall a package
 ```PowerShell
-Get-Package nodejs -provider Chocolatier -verbose | Uninstall-Package -AdditionalArguments '-y --remove-dependencies' -Verbose
+Get-Package nodejs -Provider Chocolatier -Verbose | Uninstall-Package -Verbose
 ```
 
 ### Manage package sources
 ```PowerShell
-Register-PackageSource privateRepo -provider Chocolatier -location 'https://somewhere/out/there/api/v2/'
-Find-Package nodejs -verbose -provider Chocolatier -source privateRepo -AdditionalArguments --exact | Install-Package
-Unregister-PackageSource privateRepo -provider Chocolatier
+Register-PackageSource privateRepo -Provider Chocolatier -Location 'https://somewhere/out/there/api/v2/'
+Find-Package nodejs -Verbose -Provider Chocolatier -Source privateRepo -AdditionalArguments --exact | Install-Package
+Unregister-PackageSource privateRepo -Provider Chocolatier
 ```
 
 Chocolatier integrates with Choco.exe to manage and store source information
 
 ## Pass in choco arguments
-If you need to pass in some of choco arguments to the Find, Install, Get and UnInstall-Package cmdlets, you can use AdditionalArguments PowerShell property.
+If you need to pass in some of choco arguments to the Find, Install, Get and Uninstall-Package cmdlets, you can use AdditionalArguments PowerShell property.
+
+```powershell
+Install-Package sysinternals -ProviderName Chocolatier -AcceptLicense -AdditionalArguments '--paramsglobal --params "/InstallDir=c:\windows\temp\sysinternals /QuickLaunchShortcut=false" -y --installargs MaintenanceService=false' -Verbose
+```
 
 ## DSC Compatibility
 Fully compatible with the PackageManagement DSC resources
