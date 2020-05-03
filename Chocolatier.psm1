@@ -11,7 +11,6 @@ $script:AcceptLicense = "AcceptLicense"
 
 # Define choco related variables
 $script:ChocoExeName = 'choco.exe'
-$script:firstTime = $true
 
 # Utility variables
 $script:FastReferenceRegex = "(?<name>[^#]*)#(?<version>[^\s]*)#(?<source>[^#]*)"
