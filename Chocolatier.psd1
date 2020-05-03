@@ -5,7 +5,6 @@
 	Author = 'Ethan Bergstrom'
 	Copyright = ''
 	Description = 'Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository.'
-	# CompatiblePSEditions = @('Desktop', 'Core')
 	# Refuse to load in CoreCLR if PowerShell below 7.1 due to regressions with how PS7 loads PackageManagement DLLs
 	# https://github.com/PowerShell/PowerShell/pull/12203
 	PowerShellVersion = if($PSEdition -eq 'Core') {
