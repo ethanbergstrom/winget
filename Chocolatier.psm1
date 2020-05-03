@@ -15,7 +15,7 @@ $script:ChocoExeName = 'choco.exe'
 # Utility variables
 $script:FastReferenceRegex = "(?<name>[^#]*)#(?<version>[^\s]*)#(?<source>[^#]*)"
 
-Microsoft.PowerShell.Utility\Import-LocalizedData LocalizedData -filename 'Chocolatier.Resource.psd1'
+Import-LocalizedData LocalizedData -filename 'Chocolatier.Resource.psd1'
 
 #endregion Private Variables
 
