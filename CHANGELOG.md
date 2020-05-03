@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.0.5] - 2020-05-03 - PowerShell 7.1 Support!
+### Added
+* Support for CoreCLR-based PowerShell (7.1 or higher) (#8)
+* Availability via PSGallery on CoreCLR-based PowerShell (7.1 or higher)
+### Changed
+* Uninstall behavior to also remove all unnecessary dependencies
+### Fixed
+* Suppress Choco prompts during uninstall and upgrade actions
+
 ## [1.0.4] - 2020-02-23
 ### Added
 * Package and Choco.exe installation can run without confirmation prompts by passing the `-AcceptLicense` flag (#4)

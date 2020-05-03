@@ -54,7 +54,7 @@ If you need to pass in some of choco arguments to the Find, Install, Get and UnI
 Fully compatible with the PackageManagement DSC resources
 ```PowerShell
 Configuration MyNode {
-	Import-DscResource -Name PackageManagement,PackageManagementSource 
+	Import-DscResource -Name PackageManagement,PackageManagementSource
 	PackageManagement Chocolatier {
 		Name = 'Chocolatier'
 		Source = 'PSGallery'
@@ -138,7 +138,7 @@ Example PowerShell DSC configuration using the 'latest' required version with a 
 
 ```PowerShell
 Configuration MyNode {
-	Import-DscResource -Name PackageManagement,PackageManagementSource 
+	Import-DscResource -Name PackageManagement,PackageManagementSource
 	PackageManagement Chocolatier {
 		Name = 'Chocolatier'
 		Source = 'PSGallery'
@@ -171,13 +171,13 @@ If using the 'latest' functionality, best practice is to either:
 * unregister the default Chocolatey.org source in favor of a **single** custom source
 
 ## Known Issues
-Currently Chocolatier works on Full CLR.
-It is not supported on CoreClr.
-This means Chocolatier provider is not supported on Nano server or Linux OSs.
-The primarily reason is that the current version of choco.exe does not seem to support on CoreClr yet.
+### Compatibility
+Chocolatier works with PowerShell for both FullCLR/'Desktop' (ex 5.1) and CoreCLR (ex: 7.1), though Chocolatey itself still requires FullCLR.
+
+When used with CoreCLR, PowerShell 7.1 is a minimum requirement due to [a compatibility issue in PowerShell 7.0](https://github.com/PowerShell/PowerShell/pull/12203).
 
 ### Save a package
-Save-Package is not supported with the Chocolatier provider, due to Chocolatey not supporting package downloads without special licensing.
+Save-Package is not supported with the Chocolatier provider, due to Chocolatey not supporting package downloads without special licensing. If you wish to save NuGet packages, check out the [PackageManagement Nuget provider](https://github.com/OneGet/NuGetProvider).
 
 ## Legal and Licensing
 Chocolatier is licensed under the [MIT license](./LICENSE.txt).

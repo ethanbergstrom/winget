@@ -104,6 +104,10 @@ function Invoke-Choco {
 			$cmdString = 'install '
 			# Accept all prompts and dont show installation progress percentage - the excess output from choco.exe will slow down PowerShell
 			$AdditionalArgs += ' --yes --no-progress '
+		} elseif ($Uninstall) {
+			$cmdString = 'uninstall '
+			# Accept all prompts
+			$AdditionalArgs += ' --yes --remove-dependencies '
 		} else {
 			# Any additional args passed to other commands should be stripped of install-related arguments because Choco gets confused if they're passed
 			$AdditionalArgs = $([regex]::Split($AdditionalArgs,$argSplitRegex) | Where-Object -FilterScript {$_ -notmatch $argFilterRegex}) -join ' -'
@@ -111,10 +115,11 @@ function Invoke-Choco {
 			if ($Search) {
 				$cmdString = 'search '
 				$AdditionalArgs += ' --limit-output '
-			} elseif ($Uninstall) {
-				$cmdString = 'uninstall '
-			} elseif ($Upgrade) {
+			}
+			elseif ($Upgrade) {
 				$cmdString = 'upgrade '
+				# Accept all prompts
+				$AdditionalArgs += ' --yes '
 			}
 		}
 

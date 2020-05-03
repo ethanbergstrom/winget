@@ -5,14 +5,6 @@ function Install-ChocoBinaries {
 	param (
 	)
 
-	if ($PSEdition -Match 'Core') {
-		ThrowError -ExceptionName 'System.NotSupportedException' `
-			-ExceptionMessage ($LocalizedData.ChocoUnSupportedOnCoreCLR -f $script:ProviderName) `
-			-ErrorId 'ChocoUnSupportedOnCoreCLR' `
-			-ErrorCategory NotImplemented `
-			-ExceptionObject $PSEdition
-	}
-
 	# If the user opts not to install Chocolatey, throw an exception
 	if (-not (((Get-ForceProperty) -or (Get-AcceptLicenseProperty)) -or $request.ShouldContinue($LocalizedData.InstallChocoExeShouldContinueQuery, $LocalizedData.InstallChocoExeShouldContinueCaption))) {
 		ThrowError -ExceptionName 'System.OperationCanceledException' `
