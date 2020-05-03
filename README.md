@@ -8,11 +8,6 @@ Chocolatier is Package Management (OneGet) provider that facilitates installing 
 Find-PackageProvider Chocolatier -verbose
 
 Install-PackageProvider Chocolatier -verbose
-
-Import-PackageProvider Chocolatier
-
-# Run Get-PackageProvider to check if the Chocolatier provider is imported
-Get-PackageProvider -verbose
 ```
 
 ## Sample usages
