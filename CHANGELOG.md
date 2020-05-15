@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.0.6] - 2020-05-15
+### Added
+* Support for CoreCLR-based PowerShell (7.0.1 or higher) (#8)
+
 ## [1.0.5] - 2020-05-03 - PowerShell 7.1 Support!
 ### Added
 * Support for CoreCLR-based PowerShell (7.1 or higher) (#8)

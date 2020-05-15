@@ -2,3 +2,4 @@
 *.nupkg
 chocolatey.log
 settings.json
+lib/*

@@ -1,14 +1,14 @@
 @{
 	RootModule = 'Chocolatier.psm1'
-	ModuleVersion = '1.0.5'
+	ModuleVersion = '1.0.6'
 	GUID = 'c1735ed7-8b2f-426a-8cbc-b7feb6b8288d'
 	Author = 'Ethan Bergstrom'
 	Copyright = ''
 	Description = 'Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository.'
-	# Refuse to load in CoreCLR if PowerShell below 7.1 due to regressions with how PS7 loads PackageManagement DLLs
+	# Refuse to load in CoreCLR if PowerShell below 7.0.1 due to regressions with how 7.0 loads PackageManagement DLLs
 	# https://github.com/PowerShell/PowerShell/pull/12203
 	PowerShellVersion = if($PSEdition -eq 'Core') {
-		'7.1.0'
+		'7.0.1'
 	} else {
 		'3.0'
 	}
