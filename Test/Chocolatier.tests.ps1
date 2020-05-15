@@ -138,8 +138,8 @@ Describe "Chocolatier DSC integration with args/params support" -Tags @('BVT', '
 }
 Describe "Chocolatier support for 'latest' RequiredVersion value with DSC support" -Tags @('BVT', 'DRT') {
 
-	$package = "curl"
-	$version = "7.60.0"
+	$package = "cpu-z"
+	$version = "1.77"
 
 	AfterEach {
 		Uninstall-Package -Name $package -Verbose -ProviderName $Chocolatier -Force -ErrorAction SilentlyContinue
