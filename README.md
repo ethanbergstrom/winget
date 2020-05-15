@@ -169,9 +169,9 @@ If using the 'latest' functionality, best practice is to either:
 
 ## Known Issues
 ### Compatibility
-Chocolatier works with PowerShell for both FullCLR/'Desktop' (ex 5.1) and CoreCLR (ex: 7.1), though Chocolatey itself still requires FullCLR.
+Chocolatier works with PowerShell for both FullCLR/'Desktop' (ex 5.1) and CoreCLR (ex: 7.0.1), though Chocolatey itself still requires FullCLR.
 
-When used with CoreCLR, PowerShell 7.1 is a minimum requirement due to [a compatibility issue in PowerShell 7.0](https://github.com/PowerShell/PowerShell/pull/12203).
+When used with CoreCLR, PowerShell 7.0.1 is a minimum requirement due to [a compatibility issue in PowerShell 7.0](https://github.com/PowerShell/PowerShell/pull/12203).
 
 ### Save a package
 Save-Package is not supported with the Chocolatier provider, due to Chocolatey not supporting package downloads without special licensing. If you wish to save NuGet packages, check out the [PackageManagement Nuget provider](https://github.com/OneGet/NuGetProvider).
