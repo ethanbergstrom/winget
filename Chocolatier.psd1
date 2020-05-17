@@ -1,6 +1,6 @@
 @{
 	RootModule = 'Chocolatier.psm1'
-	ModuleVersion = '1.1.2'
+	ModuleVersion = '1.1.3'
 	GUID = 'c1735ed7-8b2f-426a-8cbc-b7feb6b8288d'
 	Author = 'Ethan Bergstrom'
 	Copyright = ''

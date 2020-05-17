@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.3] - 2020-05-17
+### Fixed
+* Initial handling of Choco.exe path after installation
+
 ## [1.1.2] - 2020-05-17
 ### Fixed
 * Prevent install of Choco.exe from contaminating the pipeline
