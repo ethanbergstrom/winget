@@ -170,11 +170,16 @@ If using the 'latest' functionality, best practice is to either:
 ## Experimental features
 ### API integration
 Chocolatier can invoke Chocolatey through it's native API rather than through interpreting CLI output.
+
 By default, Chocolatey will continue to use CLI output (for now), but native API support can be enabled in PowerShell 5.1 and below sessions before the provider is first invoked:
 ```PowerShell
 $env:CHOCO_NATIVEAPI = $true
 Find-Package -ProviderName Chocolatier -Name nodejs
 ```
+
+If Choco.exe is already installed, the Native API will detect the existing Chocolatey installation path and leverage it for maintaining local package and source metadata.
+
+Please note that if invoking the provider with the Native API is the first use of Chocolatey on your system, the provider will try to guess where to extract Chocolatey's various files (%ProgramData%/Chocolatey).
 
 ## Known Issues
 ### Compatibility
