@@ -3,6 +3,9 @@ version: 1.0.{build}
 image: Visual Studio 2019
 
 install:
+  - ps: |
+      Write-Output "Branch: $env:APPVEYOR_REPO_BRANCH"
+      Write-Output "Tag: $env:APPVEYOR_REPO_TAG_NAME"
   - dotnet tool restore
   - dotnet paket restore
   - cinst pester
