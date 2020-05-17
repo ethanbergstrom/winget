@@ -34,6 +34,5 @@ function Install-ChocoBinaries {
 			-ErrorCategory InvalidOperation `
 			-ExceptionObject $job
 	}
-
 	Get-ChocoPath
 }

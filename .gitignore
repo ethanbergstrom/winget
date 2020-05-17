@@ -1,5 +1,4 @@
 *TestsResults.xml
-*.nupkg
-chocolatey.log
-settings.json
-lib/*
+*.dll
+.paket/*
+packages/*

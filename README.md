@@ -167,6 +167,15 @@ If using the 'latest' functionality, best practice is to either:
 * use the default Chocolatey.org source
 * unregister the default Chocolatey.org source in favor of a **single** custom source
 
+## Experimental features
+### API integration
+Chocolatier can invoke Chocolatey through it's native API rather than through interpreting CLI output.
+By default, Chocolatey will continue to use CLI output (for now), but native API support can be enabled in PowerShell 5.1 and below sessions before the provider is first invoked:
+```PowerShell
+$env:CHOCO_NATIVEAPI = $true
+Find-Package -ProviderName Chocolatier -Name nodejs
+```
+
 ## Known Issues
 ### Compatibility
 Chocolatier works with PowerShell for both FullCLR/'Desktop' (ex 5.1) and CoreCLR (ex: 7.0.1), though Chocolatey itself still requires FullCLR.

@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.0] - 2020-05-17 - Native Chocolatey API Support!
+### Added
+* Support for invoking Chocolatey through the native API on FullClR (PowerShell 5.1 and below)
+* Automatic packaging and deployment via CI/CD
+
 ## [1.0.6] - 2020-05-15
 ### Added
 * Support for CoreCLR-based PowerShell (7.0.1 or higher) (#8)

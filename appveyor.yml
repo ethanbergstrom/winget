@@ -1,19 +1,28 @@
 version: 1.0.{build}
-os:
-- WMF 5
-configuration: Release
 
-build: false
+image: Visual Studio 2019
 
-platform: Any CPU
-# Install Pester
 install:
-    - cinst -y pester
+  - dotnet tool restore
+  - dotnet paket restore
+  - cinst pester
 
-clone_folder: C:\projects\Chocolatier
+build_script:
+  - ps: |
+      New-Item -ItemType Directory -Name lib
+      Copy-Item .\packages\chocolatey.lib\lib\chocolatey.dll .\lib\
+      Copy-Item .\packages\log4net\lib\net40-full\log4net.dll .\lib\
+      Remove-Item @('appveyor.yml','paket*','packages') -Force -Recurse
+      Copy-Item ..\Chocolatier ~\Documents\WindowsPowerShell\Modules -Recurse
 
-before_test:
-  - ps: Copy-Item -Recurse "C:\projects\Chocolatier\" "$Env:ProgramFiles\WindowsPowerShell\Modules\" -Force -Verbose
-  - ps: $res = Invoke-Pester -Path "C:\projects\Chocolatier\Test" -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
-  - ps: (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
-  - ps: if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed."}
+test_script:
+  - ps: |
+      Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.CLI.xml
+      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.CLI.xml))
+  - ps: |
+      $env:CHOCO_NATIVEAPI = $true
+      Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.NativeAPI.xml
+      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.NativeAPI.xml))
+
+deploy_script:
+  - ps: if ($env:APPVEYOR_REPO_BRANCH -eq 'master' -and $env:APPVEYOR_REPO_TAG_NAME -eq 'current') {Publish-Module -Name Chocolatier -NuGetApiKey "$env:PSGALLERYKEY"}

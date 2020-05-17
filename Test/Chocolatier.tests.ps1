@@ -1,165 +1,178 @@
-﻿
-$Chocolatier = "Chocolatier"
+﻿$Chocolatier = 'Chocolatier'
 
-import-module packagemanagement
-Get-Packageprovider -verbose
-$provider = Get-PackageProvider -verbose -ListAvailable
-if($provider.Name -notcontains $Chocolatier)
-{
-	$a= Find-PackageProvider -Name $Chocolatier -verbose -ForceBootstrap
+Import-PackageProvider $Chocolatier -Force
 
-	if($a.Name -eq $Chocolatier)
-	{
-		Install-PackageProvider $Chocolatier -verbose -force
+if ($PSEdition -eq 'Desktop' -and $env:CHOCO_NATIVEAPI) {
+	$platform = 'API'
+} else {
+	$platform = 'CLI'
+}
+
+Describe "$platform basic package search operations" {
+	Context 'without additional arguments' {
+		$package = 'cpu-z'
+
+		It 'gets a list of latest installed packages' {
+			Get-Package -ProviderName $Chocolatier | Where-Object {$_.Name -contains 'chocolatey'} | Should Not BeNullOrEmpty
+		}
+		It 'searches for the latest version of a package' {
+			Find-Package -ProviderName $Chocolatier -Name $package | Where-Object {$_.Name -contains $package}  | Should Not BeNullOrEmpty
+		}
+		It 'searches for all versions of a package' {
+			Find-Package -ProviderName $Chocolatier -Name $package -AllVersions | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'searches for the latest version of a package with a wildcard pattern' {
+			Find-Package -ProviderName $Chocolatier -Name "$package*" | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
 	}
-	else
-	{
-		Write-Error "Fail to find $Chocolatier provider"
+	Context 'with additional arguments' {
+		$package = 'cpu-z'
+		$argsAndParams = '--exact'
+
+		It 'searches for the exact package name' {
+			Find-Package -ProviderName $Chocolatier -Name $package -AdditionalArguments $argsAndParams | Should Not BeNullOrEmpty
+		}
 	}
 }
 
-Import-PackageProvider $Chocolatier -force
+Describe "$platform DSC-compliant package installation and uninstallation" {
+	Context 'without additional arguments' {
+		$package = 'cpu-z'
 
-Describe "Chocolatier testing" -Tags @('BVT', 'DRT') {
-	AfterAll {
-		#reset the environment variable
-		$env:BootstrapProviderTestfeedUrl=""
+		It 'searches for the latest version of a package' {
+			Find-Package -ProviderName $Chocolatier -Name $package | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'silently installs the latest version of a package' {
+			Install-Package -ProviderName $Chocolatier -Name $package -Force | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'finds the locally installed package just installed' {
+			Get-Package -ProviderName $Chocolatier -Name $package | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'silently uninstalls the locally installed package just installed' {
+			Uninstall-Package -ProviderName $Chocolatier -Name $package | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
 	}
+	Context 'with additional arguments' {
+		$package = 'sysinternals'
+		$argsAndParams = '--paramsglobal --params "/InstallDir=c:\windows\temp\sysinternals /QuickLaunchShortcut=false" -y --installargs MaintenanceService=false'
 
-	It "get-package" {
-		$a=get-package -ProviderName $Chocolatier -verbose
-		$a | should not BeNullOrEmpty
-
-		$b=get-package -ProviderName $Chocolatier -name chocolatey -allversions -verbose
-		$b | ?{ $_.name -eq "chocolatey" } | should not BeNullOrEmpty
-	}
-
-		It "find-package" {
-
-		$a=find-package -ProviderName $Chocolatier -name  cpu-z -ForceBootstrap -force -verbose
-		$a | ?{ $_.name -eq "cpu-z" } | should not BeNullOrEmpty
-
-		$b=find-package -ProviderName $Chocolatier -name  cpu-z -allversions -verbose
-		$b | ?{ $_.name -eq "cpu-z" } | should not BeNullOrEmpty
-
-		$c=find-package -ProviderName $Chocolatier -name cpu-z -AdditionalArguments --exact -verbose
-		$c | ?{ $_.name -eq "cpu-z" } | should not BeNullOrEmpty
-	}
-
-	It "find-package with wildcard search" {
-
-		$d=find-package -ProviderName $Chocolatier -name *firefox -Verbose
-		$d | ?{ $_.name -eq "firefox" } | should not BeNullOrEmpty
-
-	}
-
-	It "find-install-package cpu-z" {
-
-		$package = "cpu-z"
-		$a=find-package $package -verbose -provider $Chocolatier -AdditionalArguments --exact | install-package -force -verbose
-		$a.Name -contains $package | Should Be $true
-
-		$b = get-package $package -verbose -provider $Chocolatier
-		$b.Name -contains $package | Should Be $true
-
-		$c= Uninstall-package $package -verbose -ProviderName $Chocolatier -AdditionalArguments '-y --remove-dependencies'
-		$c.Name -contains $package | Should Be $true
-	}
-
-	It "install-package with zip, get-uninstall-package" {
-
-		$package = "7zip"
-
-		$a= install-package -name $package -verbose -ProviderName $Chocolatier -force
-		$a.Name -contains $package | Should Be $true
-
-		$a=get-package $package -provider $Chocolatier -verbose | uninstall-package -AdditionalArguments '-y --remove-dependencies' -Verbose
-		$a.Name -contains $package | Should Be $true
+		It 'searches for the latest version of a package' {
+			Find-Package -ProviderName $Chocolatier -Name $package -AdditionalArguments $argsAndParams | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'silently installs the latest version of a package' {
+			Install-Package -Force -ProviderName $Chocolatier -Name $package -AdditionalArguments $argsAndParams | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'finds the locally installed package just installed' {
+			Get-Package -ProviderName $Chocolatier -Name $package -AdditionalArguments $argsAndParams | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'silently uninstalls the locally installed package just installed' {
+			Uninstall-Package -ProviderName $Chocolatier -Name $package -AdditionalArguments $argsAndParams | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
 	}
 }
 
-Describe "Chocolatier multi-source testing" -Tags @('BVT', 'DRT') {
+Describe "$platform pipline-based package installation and uninstallation" {
+	Context 'without additional arguments' {
+		$package = 'cpu-z'
+
+		It 'searches for and silently installs the latest version of a package' {
+			Find-Package -ProviderName $Chocolatier -Name $package | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+		It 'finds and silently uninstalls the locally installed package just installed' {
+			Get-Package -ProviderName $Chocolatier -Name $package | Uninstall-Package | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+	}
+	Context 'with additional arguments' {
+		$package = 'sysinternals'
+		$argsAndParams = '--paramsglobal --params "/InstallDir=c:\windows\temp\sysinternals /QuickLaunchShortcut=false" -y --installargs MaintenanceService=false'
+
+		It 'searches for and silently installs the latest version of a package' {
+			Find-Package -ProviderName $Chocolatier -Name $package | Install-Package -Force -AdditionalArguments $argsAndParams | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+
+		It 'finds and silently uninstalls the locally installed package just installed' {
+			Get-Package -ProviderName $Chocolatier -Name $package | Uninstall-Package -AdditionalArguments $argsAndParams | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		}
+	}
+}
+
+Describe "$platform multi-source support" {
 	BeforeAll {
-		$altSourceName = "LocalChocoSource"
+		$altSourceName = 'LocalChocoSource'
 		$altSourceLocation = $PSScriptRoot
-		$package = "cpu-z"
+		$package = 'cpu-z'
 
 		Save-Package $package -Source 'http://chocolatey.org/api/v2' -Path $altSourceLocation
 		Unregister-PackageSource -Name $altSourceName -ProviderName $Chocolatier -ErrorAction SilentlyContinue
 	}
 	AfterAll {
-		Remove-item $altSourceLocation\$package* -Force -ErrorAction SilentlyContinue
+		Remove-Item "$altSourceLocation\*.nupkg" -Force -ErrorAction SilentlyContinue
 		Unregister-PackageSource -Name $altSourceName -ProviderName $Chocolatier -ErrorAction SilentlyContinue
 	}
 
-	It "refuses to register a source with no location" {
-		$a = Register-PackageSource -Name $altSourceName -ProviderName $Chocolatier -Verbose -ErrorAction SilentlyContinue
-		$a.Name -eq $altSourceName | Should Be $false
+	It 'refuses to register a source with no location' {
+		Register-PackageSource -Name $altSourceName -ProviderName $Chocolatier -ErrorAction SilentlyContinue | Where-Object {$_.Name -eq $altSourceName} | Should BeNullOrEmpty
 	}
-
-	It "installs and uninstalls from an alternative package source" {
-
-		$a = Register-PackageSource -Name $altSourceName -ProviderName $Chocolatier -Location $altSourceLocation -Verbose
-		$a.Name -eq $altSourceName | Should Be $true
-
-		$b=find-package $package -verbose -provider $Chocolatier -source $altSourceName -AdditionalArguments --exact | install-package -force
-		$b.Name -contains $package | Should Be $true
-
-		$c = get-package $package -verbose -provider $Chocolatier
-		$c.Name -contains $package | Should Be $true
-
-		$d= Uninstall-package $package -verbose -ProviderName $Chocolatier -AdditionalArguments '-y --remove-dependencies'
-		$d.Name -contains $package | Should Be $true
-
+	It 'registers an alternative package source' {
+		Register-PackageSource -Name $altSourceName -ProviderName $Chocolatier -Location $altSourceLocation | Where-Object {$_.Name -eq $altSourceName} | Should Not BeNullOrEmpty
+	}
+	It 'searches for and installs the latest version of a package from an alternate source' {
+		Find-Package -ProviderName $Chocolatier -Name $package -source $altSourceName | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+	}
+	It 'finds and uninstalls a package installed from an alternate source' {
+		Get-Package -ProviderName $Chocolatier -Name $package | Uninstall-Package | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+	}
+	It 'unregisters an alternative package source' {
 		Unregister-PackageSource -Name $altSourceName -ProviderName $Chocolatier
-		$e = Get-PackageSource -ProviderName $Chocolatier
-		$e.Name -eq $altSourceName | Should Be $false
+		Get-PackageSource -ProviderName $Chocolatier | Where-Object {$_.Name -eq $altSourceName} | Should BeNullOrEmpty
 	}
 }
 
-Describe "Chocolatier DSC integration with args/params support" -Tags @('BVT', 'DRT') {
-	$package = "sysinternals"
-
-	$argsAndParams = "--paramsglobal --params ""/InstallDir=c:\windows\temp\sysinternals /QuickLaunchShortcut=false"" -y --installargs MaintenanceService=false"
-
-	It "finds, installs and uninstalls packages when given installation arguments parameters that would otherwise cause search to fail" {
-
-		$a = find-package $package -verbose -provider $Chocolatier -AdditionalArguments $argsAndParams
-		$a = install-package $a -force -AdditionalArguments $argsAndParams -Verbose
-		$a.Name -contains $package | Should Be $true
-
-		$b = get-package $package -verbose -provider $Chocolatier -AdditionalArguments $argsAndParams
-		$b.Name -contains $package | Should Be $true
-
-		$c = Uninstall-package $package -verbose -ProviderName $Chocolatier -AdditionalArguments $argsAndParams
-		$c.Name -contains $package | Should Be $true
-
-	}
-}
-Describe "Chocolatier support for 'latest' RequiredVersion value with DSC support" -Tags @('BVT', 'DRT') {
-
+Describe "$platform version filters" {
 	$package = "cpu-z"
 	$version = "1.77"
 
-	AfterEach {
-		Uninstall-Package -Name $package -Verbose -ProviderName $Chocolatier -Force -ErrorAction SilentlyContinue
+	AfterAll {
+		Uninstall-Package -Name $package -ProviderName $Chocolatier -ErrorAction SilentlyContinue
 	}
 
-	It "does not find the 'latest' locally installed version if an outdated version is installed" {
-		$a = install-package -name $package -requiredVersion $version -verbose -ProviderName $Chocolatier -Force
-		$a.Name -contains $package | Should Be $true
-
-		$b = get-package $package -requiredVersion 'latest' -verbose -provider $Chocolatier -ErrorAction SilentlyContinue
-		$b.Name -contains $package | Should Be $false
+	Context 'required version' {
+		It 'searches for and silently installs a specific package version' {
+			Find-Package -ProviderName $Chocolatier -Name $package -RequiredVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -eq $version} | Should Not BeNullOrEmpty
+		}
+		It 'finds and silently uninstalls a specific package version' {
+			Get-Package -ProviderName $Chocolatier -Name $package -RequiredVersion $version | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -eq $version} | Should Not BeNullOrEmpty
+		}
 	}
 
-	It "finds, installs, and uninstalls the latest version when the 'latest' RequiredVersion value is set" {
-		$a = find-package $package -requiredversion 'latest' -verbose -provider $Chocolatier
-		$a = install-package $a -force -Verbose
-		$a.Name -contains $package | Should Be $true
+	Context 'minimum version' {
+		It 'searches for and silently installs a minimum package version' {
+			Find-Package -ProviderName $Chocolatier -Name $package -MinimumVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -ge $version} | Should Not BeNullOrEmpty
+		}
+		It 'finds and silently uninstalls a minimum package version' {
+			Get-Package -ProviderName $Chocolatier -Name $package -MinimumVersion $version | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -ge $version} | Should Not BeNullOrEmpty
+		}
+	}
 
-		$b = get-package $package -requiredversion 'latest' -verbose -provider $Chocolatier
-		$b = Uninstall-package $b -verbose
-		$b.Name -contains $package | Should Be $true
+	Context 'maximum version' {
+		It 'searches for and silently installs a maximum package version' {
+			Find-Package -ProviderName $Chocolatier -Name $package -MaximumVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -le $version} | Should Not BeNullOrEmpty
+		}
+		It 'finds and silently uninstalls a maximum package version' {
+			Get-Package -ProviderName $Chocolatier -Name $package -MaximumVersion $version | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -le $version} | Should Not BeNullOrEmpty
+		}
+	}
+
+	Context '"latest" version' {
+		It 'does not find the "latest" locally installed version if an outdated version is installed' {
+			Install-Package -name $package -requiredVersion $version -ProviderName $Chocolatier -Force
+			Get-Package -ProviderName $Chocolatier -Name $package -RequiredVersion 'latest' -ErrorAction SilentlyContinue | Where-Object {$_.Name -contains $package} | Should BeNullOrEmpty
+		}
+		It 'searches for and silently installs the latest package version' {
+			Find-Package -ProviderName $Chocolatier -Name $package -RequiredVersion 'latest' | Install-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -gt $version} | Should Not BeNullOrEmpty
+		}
+		It 'finds and silently uninstalls a specific package version' {
+			Get-Package -ProviderName $Chocolatier -Name $package -RequiredVersion 'latest' | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -and $_.Version -gt $version} | Should Not BeNullOrEmpty
+		}
 	}
 }
