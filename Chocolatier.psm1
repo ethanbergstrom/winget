@@ -35,7 +35,7 @@ $script:ChocoSourcePropertyNames = @(
 	'Visibile to Admins Only'
 )
 
-Import-LocalizedData LocalizedData -filename 'Chocolatier.Resource.psd1'
+Import-LocalizedData LocalizedData -filename "$script:ProviderName.Resource.psd1"
 
 #endregion Private Variables
 
