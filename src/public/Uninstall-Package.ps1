@@ -8,7 +8,7 @@ function Uninstall-Package {
 		$FastPackageReference
 	)
 
-	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Get-InstalledPackage'))
+	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Uninstall-Package'))
 
 	Write-Warning $LocalizedData.UninstallPackageNotSupported -f $script:ProviderName
 }

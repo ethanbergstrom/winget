@@ -17,8 +17,10 @@ ConvertFrom-StringData @'
 
 	SearchVersionNotSupported='WinGet': WinGet does not support seaching for a specific version. Returning all versions instead.
 	SavePackageNotSupported='WinGet': Save-Package is not supported because WinGet does not support downloading packages.
+	GetPackageNotSupported='WinGet': Get-Package is not supported because WinGet does not support listing installed packages.
+	UninstallPackageNotSupported='WinGet': Uninstall-Package is not supported because WinGet does not support uninstalling installed packages.
 
-	InstallWinGetExeShouldContinueQuery=WinGet is built on WinGet.exe. Do you want WinGet to install WinGet.exe from 'https://WinGet.org/install.ps1' now?
+	InstallWinGetExeShouldContinueQuery=WinGet is built on WinGet.exe. Do you want WinGet to install WinGet.exe from 'https://github.com/microsoft/winget-cli' now?
 	InstallWinGetExeShouldContinueCaption=WinGet.exe is required to continue
 	UserDeclined=User declined to {0} WinGet.
 
@@ -36,7 +38,6 @@ ConvertFrom-StringData @'
 	WinGetNotFound=Unable to find WinGet.exe under $PATH.
 	InstallPackageQuery={0} package '{1}'. By {0} you accept licenses for the package(s). The package possibly needs to run 'WinGetInstall.ps1'.
 	InstallPackageCaption=Are you sure you want to perform this action?
-	UpgradePackageQuery=There is a newer version '{0}' of WinGet available. Do you want to upgrade?
 
 	NameShouldNotContainWildcardCharacters=The specified name '{0}' should not contain any wildcard characters, please correct it and try again.
 	AllVersionsCannotBeUsedWithOtherVersionParameters=You cannot use the parameter AllVersions with RequiredVersion, MinimumVersion or MaximumVersion in the same command.
