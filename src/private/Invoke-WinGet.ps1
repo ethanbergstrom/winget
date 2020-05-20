@@ -72,11 +72,7 @@ function Invoke-WinGet {
 	if ($WinGetExePath) {
 		Write-Debug ("WinGet already installed")
 	} else {
-		ThrowError -ExceptionName 'System.OperationCanceledException' `
-		-ExceptionMessage $LocalizedData.FailToLocateWinGet `
-		-ErrorID 'FailToLocateWinGet' `
-		-ErrorCategory InvalidOperation `
-		-ExceptionObject 'WinGet.exe'
+		$WinGetExePath = Install-WinGetBinaries
 	}
 
 	# Source Management
