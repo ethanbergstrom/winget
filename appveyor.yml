@@ -2,17 +2,9 @@ version: 1.0.{build}
 
 image: Visual Studio 2019
 
-install:
-  - dotnet tool restore
-  - dotnet paket restore
-  - cinst pester
-
 build_script:
   - ps: |
-      New-Item -ItemType Directory -Name lib
-      Copy-Item .\packages\WinGet.lib\lib\WinGet.dll .\lib\
-      Copy-Item .\packages\log4net\lib\net40-full\log4net.dll .\lib\
-      Remove-Item @('.config','.git*','appveyor.yml','.packet*','paket*','packages') -Force -Recurse
+      Remove-Item @('.git*','appveyor.yml') -Force -Recurse
       Copy-Item ..\WinGet ~\Documents\WindowsPowerShell\Modules -Recurse
 
 test_script:
