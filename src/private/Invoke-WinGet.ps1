@@ -76,16 +76,16 @@ function Invoke-WinGet {
 		-ExceptionMessage $LocalizedData.FailToLocateWinGet `
 		-ErrorID 'FailToLocateWinGet' `
 		-ErrorCategory InvalidOperation `
-		-ExceptionObject $job
+		-ExceptionObject 'WinGet.exe'
 	}
 
 	# Source Management
 	if ($SourceList -or $SourceAdd -or $SourceRemove) {
 		$cmdString = 'source '
 		if ($SourceAdd) {
-			$cmdString += "add --name='$SourceName' --source='$SourceLocation' "
+			$cmdString += "add --name $SourceName --arg $SourceLocation "
 		} elseif ($SourceRemove) {
-			$cmdString += "remove --name='$SourceName' "
+			$cmdString += "remove --name $SourceName "
 		} elseif ($SourceList) {
 			$cmdString += 'list '
 		}
@@ -146,8 +146,17 @@ function Invoke-WinGet {
 			# Search returns an extra line of whitespace to skip
 			$output | Select-Object -Skip 3 | ConvertTo-SoftwareIdentity @swidArgs
 		} elseif ($SourceList) {
+			$ArgIndex = $output[0].IndexOf('Arg')
 			# Skip the header lines and convert the rest
-			$output | Select-Object -Skip 2 | ConvertTo-PackageSource -ArgIndex $output[0].IndexOf('Arg')
+			$output | Select-Object -Skip 2 | ForEach-Object {
+				$packageSource = @{
+					Name = $_.Substring(0,$ArgIndex-1).Trim()
+					Location = $_.Substring($ArgIndex).Trim()
+					Trusted = $True
+					Registered = $true
+				}
+				New-PackageSource @packageSource
+			}
 		} else {
 			$output
 		}
