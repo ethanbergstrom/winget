@@ -10,7 +10,7 @@ function Remove-PackageSource {
 
 	[array]$RegisteredPackageSources = Get-PackageSources
 
-	# Choco.exe will not error if the specified source name isn't already registered, so we will do it here instead.
+	# WinGet.exe will not error if the specified source name isn't already registered, so we will do it here instead.
 	if (-not ($RegisteredPackageSources.Name -eq $Name)) {
 		ThrowError -ExceptionName "System.ArgumentException" `
 			-ExceptionMessage ($LocalizedData.PackageSourceNotFound -f $Name) `
@@ -18,6 +18,6 @@ function Remove-PackageSource {
 			-ErrorCategory InvalidArgument
 	}
 
-	# Invoke-Choco will throw an exception if unregistration fails
-	Invoke-Choco -SourceRemove -SourceName $Name
+	# Invoke-WinGet will throw an exception if unregistration fails
+	Invoke-WinGet -SourceRemove -SourceName $Name
 }

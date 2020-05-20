@@ -11,10 +11,10 @@ function Resolve-PackageSource {
 		$SourceNames = "*"
 	}
 
-	# Get sources from Chocolatey
+	# Get sources from WinGet
 	[array]$RegisteredPackageSources = Get-PackageSources
 
-	# Filter sources by whether they're disabled in Chocolatey
+	# Filter sources by whether they're disabled in WinGet
 	$RegisteredPackageSources | Where-Object {
 		$src = $_.Name
 		Write-Debug "Source $src is registred"

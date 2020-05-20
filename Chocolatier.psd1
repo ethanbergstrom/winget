@@ -1,10 +1,10 @@
 @{
-	RootModule = 'Chocolatier.psm1'
-	ModuleVersion = '1.1.3'
-	GUID = 'c1735ed7-8b2f-426a-8cbc-b7feb6b8288d'
+	RootModule = 'WinGet.psm1'
+	ModuleVersion = '0.0.1'
+	GUID = '468ef37a-2557-4c10-92ec-783ec1e41639'
 	Author = 'Ethan Bergstrom'
 	Copyright = ''
-	Description = 'Package Management (OneGet) provider that facilitates installing Chocolatey packages from any NuGet repository.'
+	Description = 'Package Management (OneGet) provider that facilitates installing WinGet packages from any NuGet repository.'
 	# Refuse to load in CoreCLR if PowerShell below 7.0.1 due to regressions with how 7.0 loads PackageManagement DLLs
 	# https://github.com/PowerShell/PowerShell/pull/12203
 	PowerShellVersion = if ($PSEdition -eq 'Core') {
@@ -19,19 +19,19 @@
 		}
 	)
 	PrivateData = @{
-		PackageManagementProviders = 'Chocolatier.psm1'
+		PackageManagementProviders = 'WinGet.psm1'
 		PSData = @{
 			# Tags applied to this module to indicate this is a PackageManagement Provider.
-			Tags = @('PackageManagement','Provider','Chocolatey','PSEdition_Desktop','PSEdition_Core','Windows')
+			Tags = @('PackageManagement','Provider','WinGet','PSEdition_Desktop','PSEdition_Core','Windows')
 
 			# A URL to the license for this module.
-			LicenseUri = 'https://github.com/ethanbergstrom/Chocolatier/blob/current/LICENSE.txt'
+			LicenseUri = 'https://github.com/ethanbergstrom/WinGet/blob/current/LICENSE.txt'
 
 			# A URL to the main website for this project.
-			ProjectUri = 'https://github.com/ethanbergstrom/Chocolatier'
+			ProjectUri = 'https://github.com/ethanbergstrom/WinGet'
 
 			# ReleaseNotes of this module
-			ReleaseNotes = 'Please see https://github.com/ethanbergstrom/Chocolatier/blob/current/CHANGELOG.md for release notes'
+			ReleaseNotes = 'Please see https://github.com/ethanbergstrom/WinGet/blob/current/CHANGELOG.md for release notes'
 		}
 	}
 }

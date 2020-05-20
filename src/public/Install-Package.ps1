@@ -28,13 +28,13 @@ function Install-Package {
 		return
 	}
 
-	$swid = Invoke-Choco -Install -Package $Matches.name -Version $Matches.version -SourceName $Matches.source | 
+	$swid = Invoke-WinGet -Install -Package $Matches.name -Version $Matches.version -SourceName $Matches.source |
 		Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $Matches.version}
 
 	if (-not $swid) {
-		# Invoke-Choco didn't throw an exception but we also couldn't pull a Software Identity from the output.
-		# The output format Choco.exe may have changed from what our regex pattern was expecting.
-		Write-Warning ($LocalizedData.UnexpectedChocoResponse -f $FastPackageReference)
+		# Invoke-WinGet didn't throw an exception but we also couldn't pull a Software Identity from the output.
+		# The output format WinGet.exe may have changed from what our regex pattern was expecting.
+		Write-Warning ($LocalizedData.UnexpectedWinGetResponse -f $FastPackageReference)
 	}
 
 	$swid

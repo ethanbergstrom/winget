@@ -17,7 +17,7 @@ function Add-PackageSource {
 
 	Write-Verbose "New package source: $Name, $Location"
 
-	Invoke-Choco -SourceAdd -SourceName $Name -SourceLocation $Location
+	Invoke-WinGet -SourceAdd -SourceName $Name -SourceLocation $Location
 
 	# Add new package source
 	$packageSource = @{

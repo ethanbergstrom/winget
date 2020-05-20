@@ -10,19 +10,19 @@ install:
 build_script:
   - ps: |
       New-Item -ItemType Directory -Name lib
-      Copy-Item .\packages\chocolatey.lib\lib\chocolatey.dll .\lib\
+      Copy-Item .\packages\WinGet.lib\lib\WinGet.dll .\lib\
       Copy-Item .\packages\log4net\lib\net40-full\log4net.dll .\lib\
       Remove-Item @('.config','.git*','appveyor.yml','.packet*','paket*','packages') -Force -Recurse
-      Copy-Item ..\Chocolatier ~\Documents\WindowsPowerShell\Modules -Recurse
+      Copy-Item ..\WinGet ~\Documents\WindowsPowerShell\Modules -Recurse
 
 test_script:
   - ps: |
       Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.CLI.xml
       (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.CLI.xml))
   - ps: |
-      $env:CHOCO_NATIVEAPI = $true
+      $env:WinGet_NATIVEAPI = $true
       Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.NativeAPI.xml
       (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.NativeAPI.xml))
 
 deploy_script:
-  - ps: if ($env:APPVEYOR_REPO_TAG_NAME -eq 'current') {Write-Output "Publishing...";Publish-Module -Name Chocolatier -NuGetApiKey "$env:PSGALLERYKEY"}
+  - ps: if ($env:APPVEYOR_REPO_TAG_NAME -eq 'current') {Write-Output "Publishing...";Publish-Module -Name WinGet -NuGetApiKey "$env:PSGALLERYKEY"}

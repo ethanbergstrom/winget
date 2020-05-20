@@ -1,4 +1,4 @@
-function Find-ChocoPackage {
+function Find-WinGetPackage {
 	param (
 		[Parameter(Mandatory=$true)]
 		[string]
@@ -43,10 +43,10 @@ function Find-ChocoPackage {
 			# If no source name is specified and only one source is available, use it
 			$selectedSource = $RegisteredPackageSources[0].Name
 		} elseif ($RegisteredPackageSources.Name -eq $script:PackageSourceName) {
-			# If multiple sources are avaiable but none specified, default to using Chocolatey.org - if present
+			# If multiple sources are avaiable but none specified, default to using WinGet.org - if present
 			$selectedSource = $script:PackageSourceName
 		} else {
-			# If Chocoately.org is not present and no source specified, throw an exception
+			# If WinGetately.org is not present and no source specified, throw an exception
 			ThrowError -ExceptionName 'System.ArgumentException' `
 				-ExceptionMessage $LocalizedData.UnspecifiedSource `
 				-ErrorId 'UnspecifiedSource' `
@@ -56,22 +56,20 @@ function Find-ChocoPackage {
 
 	Write-Verbose "Source selected: $selectedSource"
 
-	$chocoParams = @{
+	$WinGetParams = @{
 		Search = $true
 		Package = $name
 		SourceName = $selectedSource
 	}
 
+	# WinGet does not support searching by min or max version, so if a user is picky we'll need to pull back the latest and see if it meets the requirements further down
 	if ($requiredVersion) {
-		$chocoParams.Add('Version',$requiredVersion)
-	} elseif ($minimumVersion -or $maximumVersion -or $options.ContainsKey($script:AllVersions)) {
-		# Choco does not support searching by min or max version, so if a user is picky we'll need to pull back all versions and filter ourselves
-		$chocoParams.Add('AllVersions',$true)
+		$WinGetParams.Add('Version',$requiredVersion)
 	}
 
 	# Return the result without additional evaluation, even if empty, to let PackageManagement handle error management
-	# Will only terminate if Invoke-Choco fails to call choco.exe
-	Invoke-Choco @chocoParams |
+	# Will only terminate if Invoke-WinGet fails to call WinGet.exe
+	Invoke-WinGet @WinGetParams |
 		Where-Object {Test-PackageName -PackageName $_.Name -RequestedName $Name} |
 			Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
 }

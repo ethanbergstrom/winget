@@ -26,7 +26,7 @@ function Test-PackageName {
 
 	$nameRegex='^.*'+($RequestedName.TrimStart('*')).TrimEnd('.')+'.*$'
 
-	# Return true if the package name returned from choco matched what we were expecting
+	# Return true if the package name returned from WinGet matched what we were expecting
 	($PackageName -match $nameRegex) -and (
 		($RequestedName -eq $PackageName) -or (Test-WildcardPattern -name $RequestedName)
 	)

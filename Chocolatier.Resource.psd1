@@ -1,42 +1,42 @@
 ConvertFrom-StringData @'
 ###PSLOC
-	ProviderDebugMessage='Chocolatier': '{0}'.
-	FastPackageReference='Chocolatier': The FastPackageReference is '{0}'.
+	ProviderDebugMessage='WinGet': '{0}'.
+	FastPackageReference='WinGet': The FastPackageReference is '{0}'.
 
 	SearchingForPackage=Searching for package
 	InstallingPackage=Installing package
 	FindingLocalPackage=Finding local packages
 	UnInstallingPackage=UnInstalling package
 	ProcessingPackage=Processing package
-	CheckingChoco=Checking if a newer version of Chocolatey available
-	UpgradingChoco=Upgrading Chocolatey
+	CheckingWinGet=Checking if a newer version of WinGet available
+	UpgradingWinGet=Upgrading WinGet
 	Complete=Complete
 
 	SearchingEntireRepo=Searching the entire repo is not supported. Please specify package name.
-	ChocoUnSupportedOnCoreCLR='{0}': Choco is not supported on CoreCLR (Nano Server or *nix).
+	WinGetUnSupportedOnCoreCLR='{0}': WinGet is not supported on CoreCLR (Nano Server or *nix).
 
-	SearchVersionNotSupported='Chocolatier': Choco does not support seaching for a specific version. Returning all versions instead.
-	SavePackageNotSupported='Chocolatier': Save-Package is not supported because Choco does not support downloading packages.
+	SearchVersionNotSupported='WinGet': WinGet does not support seaching for a specific version. Returning all versions instead.
+	SavePackageNotSupported='WinGet': Save-Package is not supported because WinGet does not support downloading packages.
 
-	InstallChocoExeShouldContinueQuery=Chocolatier is built on Choco.exe. Do you want Chocolatier to install Choco.exe from 'https://chocolatey.org/install.ps1' now?
-	InstallChocoExeShouldContinueCaption=Choco.exe is required to continue
-	UserDeclined=User declined to {0} Chocolatey.
+	InstallWinGetExeShouldContinueQuery=WinGet is built on WinGet.exe. Do you want WinGet to install WinGet.exe from 'https://WinGet.org/install.ps1' now?
+	InstallWinGetExeShouldContinueCaption=WinGet.exe is required to continue
+	UserDeclined=User declined to {0} WinGet.
 
 	NotInstalled=Package '{0}' is not installed.
 	FailToInstall=Failed to install the package because the fast reference '{0}' is incorrect.
 	FailToUninstall=Failed to uninstall the package because the fast reference '{0}' is incorrect.
-	FailToInstallChoco=choco installed failed. You may relaunch PowerShell as elevated mode and try again.
+	FailToInstallWinGet=WinGet installed failed. You may relaunch PowerShell as elevated mode and try again.
 	OperationFailed='{0}' '{1}' Failed. You may relaunch PowerShell as elevated mode or try again with -Verbose -Debug to get more information.
-	FoundNewerChocolatey=Found Chocolatey version '{0}' is greater than the installed one '{1}'
+	FoundNewerWinGet=Found WinGet version '{0}' is greater than the installed one '{1}'
 	InvalidVersionFormat=Version '{0}' does not match the regex '{1}'
-	UnexpectedChocoResponse=Successful output from choco.exe for fast reference '{0}' did not match the exepected format. Please review Chocolatey logs for more information.
+	UnexpectedWinGetResponse=Successful output from WinGet.exe for fast reference '{0}' did not match the exepected format. Please review WinGet logs for more information.
 
 	OperationSucceed='{0}' '{1}' Successfully.
-	ChocoFound=Found choco.exe in '{0}'.
-	ChocoNotFound=Unable to find choco.exe under $PATH.
-	InstallPackageQuery={0} package '{1}'. By {0} you accept licenses for the package(s). The package possibly needs to run 'chocolateyInstall.ps1'.
+	WinGetFound=Found WinGet.exe in '{0}'.
+	WinGetNotFound=Unable to find WinGet.exe under $PATH.
+	InstallPackageQuery={0} package '{1}'. By {0} you accept licenses for the package(s). The package possibly needs to run 'WinGetInstall.ps1'.
 	InstallPackageCaption=Are you sure you want to perform this action?
-	UpgradePackageQuery=There is a newer version '{0}' of Chocolatey available. Do you want to upgrade?
+	UpgradePackageQuery=There is a newer version '{0}' of WinGet available. Do you want to upgrade?
 
 	NameShouldNotContainWildcardCharacters=The specified name '{0}' should not contain any wildcard characters, please correct it and try again.
 	AllVersionsCannotBeUsedWithOtherVersionParameters=You cannot use the parameter AllVersions with RequiredVersion, MinimumVersion or MaximumVersion in the same command.
