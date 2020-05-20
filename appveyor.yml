@@ -1,6 +1,6 @@
 version: 1.0.{build}
 
-image: Visual Studio 2019
+image: Visual Studio 2019 Preview
 
 build_script:
   - ps: |
@@ -8,13 +8,8 @@ build_script:
       Copy-Item ..\WinGet ~\Documents\WindowsPowerShell\Modules -Recurse
 
 test_script:
-  - ps: |
-      Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.CLI.xml
-      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.CLI.xml))
-  - ps: |
-      $env:WinGet_NATIVEAPI = $true
-      Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.NativeAPI.xml
-      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.NativeAPI.xml))
+  - ps: Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.xml
+  - ps: (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
 
 # deploy_script:
 #   - ps: if ($env:APPVEYOR_REPO_TAG_NAME -eq 'current') {Write-Output "Publishing...";Publish-Module -Name WinGet -NuGetApiKey "$env:PSGALLERYKEY"}
