@@ -6,6 +6,9 @@ function Get-PackageProviderName {
 # Mandatory function for the PackageManagement providers. It initializes your provider before performing any actions.
 function Initialize-Provider {
 	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Initialize-Provider'))
+
+	Update-PackageSources
+
 }
 
 # Defines PowerShell dynamic parameters so that a user can pass in parameters via OneGet to the provider

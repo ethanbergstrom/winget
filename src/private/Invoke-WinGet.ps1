@@ -26,6 +26,10 @@ function Invoke-WinGet {
 		[switch]
 		$SourceRemove,
 
+		[Parameter(Mandatory=$true, ParameterSetName='SourceUpdate')]
+		[switch]
+		$SourceUpdate,
+
 		[Parameter(ParameterSetName='Search')]
 		[Parameter(Mandatory=$true, ParameterSetName='Install')]
 		[Parameter(Mandatory=$true, ParameterSetName='Uninstall')]
@@ -42,6 +46,7 @@ function Invoke-WinGet {
 		[Parameter(ParameterSetName='Install')]
 		[Parameter(Mandatory=$true, ParameterSetName='SourceAdd')]
 		[Parameter(Mandatory=$true, ParameterSetName='SourceRemove')]
+		[Parameter(ParameterSetName='SourceUpdate')]
 		[string]
 		$SourceName = $script:PackageSourceName,
 
@@ -76,12 +81,17 @@ function Invoke-WinGet {
 	}
 
 	# Source Management
-	if ($SourceList -or $SourceAdd -or $SourceRemove) {
+	if ($SourceList -or $SourceAdd -or $SourceRemove -or $SourceUpdate) {
 		$cmdString = 'source '
 		if ($SourceAdd) {
 			$cmdString += "add --name $SourceName --arg $SourceLocation "
 		} elseif ($SourceRemove) {
 			$cmdString += "remove --name $SourceName "
+		} elseif ($SourceUpdate) {
+			$cmdString += "update "
+			if ($SourceName) {
+				$cmdString += "--name $SourceName "
+			}
 		} elseif ($SourceList) {
 			$cmdString += 'list '
 		}
