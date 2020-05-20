@@ -1,5 +1,5 @@
 # WinGet
-WinGet is Package Management (OneGet) provider that facilitates installing WinGet packages from any repository. The provider is heavily influenced by the work of [Jianyun](https://github.com/jianyunt) and the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
+WinGet is Package Management (OneGet) provider that facilitates installing WinGet packages from any repository. The provider is heavily influenced by the work of the [Chocolatier](https://github.com/ethanbergstrom/Chocolatier) project.
 
 ## Install WinGet
 ```PowerShell
