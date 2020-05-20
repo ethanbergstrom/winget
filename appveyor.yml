@@ -2,6 +2,9 @@ version: 1.0.{build}
 
 image: Visual Studio 2019 Preview
 
+install:
+  - cinst pester
+
 build_script:
   - ps: |
       Remove-Item @('.git*','appveyor.yml') -Force -Recurse
