@@ -70,6 +70,5 @@ function Find-WinGetPackage {
 	# Return the result without additional evaluation, even if empty, to let PackageManagement handle error management
 	# Will only terminate if Invoke-WinGet fails to call WinGet.exe
 	Invoke-WinGet @WinGetParams |
-		Where-Object {Test-PackageName -PackageName $_.Name -RequestedName $Name} |
-			Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
+		Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
 }

@@ -92,7 +92,7 @@ function Invoke-WinGet {
 	} else {
 		# Package Management
 		if ($Install) {
-			$cmdString = "install -id $Package"
+			$cmdString = "install --id $Package "
 			# Accept all prompts and dont show installation progress percentage - the excess output from WinGet.exe will slow down PowerShell
 			$AdditionalArgs += ' --silent '
 		} elseif ($Search) {
@@ -124,7 +124,7 @@ function Invoke-WinGet {
 			-ExceptionMessage $($output | Out-String) `
 			-ErrorID 'JobFailure' `
 			-ErrorCategory InvalidOperation `
-			-ExceptionObject $job
+			-ExceptionObject $output
 	} else {
 		if ($Install) {
 			$swid = @{
@@ -147,7 +147,7 @@ function Invoke-WinGet {
 			$output | Select-Object -Skip 3 | ConvertTo-SoftwareIdentity @swidArgs
 		} elseif ($SourceList) {
 			# Skip the header lines and convert the rest
-			$output | Select-Object -Skip 2 | ConvertTo-PackageSource -ArgIndex $output[1].IndexOf('Arg')
+			$output | Select-Object -Skip 2 | ConvertTo-PackageSource -ArgIndex $output[0].IndexOf('Arg')
 		} else {
 			$output
 		}

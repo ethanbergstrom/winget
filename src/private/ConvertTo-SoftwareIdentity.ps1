@@ -27,8 +27,14 @@ function ConvertTo-SoftwareIdentity {
 	)
 
 	process {
-		$Package = $WinGetOutput.Substring($IdIndex,$VersionIndex-1).Trim()
-		$Version = $WinGetOutput.Substring($VersionIndex,$MatchedIndex-1).Trim()
+		$Package = $WinGetOutput.Substring($IdIndex,$VersionIndex-$IdIndex).Trim()
+
+		# WinGet doesn't always return a 'Matched' column - not sure why yet
+		if ($MatchedIndex -eq -1) {
+			$Version = $WinGetOutput.Substring($VersionIndex).Trim()
+		} else {
+			$Version = $WinGetOutput.Substring($VersionIndex,$MatchedIndex-$VersionIndex).Trim()
+		}
 
 		$swid = @{
 			FastPackageReference = $Package+"#"+ $Version+"#"+$Source
