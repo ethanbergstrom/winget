@@ -32,6 +32,11 @@ jobs:
         with:
           name: module
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\WinGet\
+      - name: Install WinGet
+        shell: pwsh
+        run: .\Install-WinGet.ps1
+      - name: Install Cobalt
+        run: Install-Module Cobalt -Force
       - name: Test with Pester
         run: |
           Invoke-Pester -Configuration (New-PesterConfiguration -Hashtable @{
