@@ -30,7 +30,7 @@ Describe 'basic package search operations' {
 Describe 'DSC-compliant package installation and uninstallation' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'cpu-z'
+			$package = 'CPUID.CPU-Z'
 		}
 
 		It 'searches for the latest version of a package' {
@@ -51,7 +51,7 @@ Describe 'DSC-compliant package installation and uninstallation' {
 Describe 'pipeline-based package installation and uninstallation' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'cpu-z'
+			$package = 'CPUID.CPU-Z'
 		}
 
 		It 'searches for and silently installs the latest version of a package' {
@@ -76,17 +76,17 @@ Describe "multi-source support" {
 	}
 
 	It 'refuses to register a source with no location' {
-		Register-PackageSource -Name $altSourceName -Provider $WinGet -ErrorAction SilentlyContinue | Where-Object {$_.Name -eq $altSourceName} | Should BeNullOrEmpty
+		Register-PackageSource -Name $altSourceName -Provider $WinGet -ErrorAction SilentlyContinue | Where-Object {$_.Name -eq $altSourceName} | Should -BeNullOrEmpty
 	}
 	It 'registers an alternative package source' {
-		Register-PackageSource -Name $altSourceName -Provider $WinGet -Location $altSourceLocation | Where-Object {$_.Name -eq $altSourceName} | Should Not BeNullOrEmpty
+		Register-PackageSource -Name $altSourceName -Provider $WinGet -Location $altSourceLocation | Where-Object {$_.Name -eq $altSourceName} | Should -Not -BeNullOrEmpty
 	}
 	It 'searches for and installs the latest version of a package from an alternate source' {
-		Find-Package -Provider $WinGet -Name $package -source $altSourceName | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should Not BeNullOrEmpty
+		Find-Package -Provider $WinGet -Name $package -source $altSourceName | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 	}
 	It 'unregisters an alternative package source' {
 		Unregister-PackageSource -Name $altSourceName -Provider $WinGet
-		Get-PackageSource -Provider $WinGet | Where-Object {$_.Name -eq $altSourceName} | Should BeNullOrEmpty
+		Get-PackageSource -Provider $WinGet | Where-Object {$_.Name -eq $altSourceName} | Should -BeNullOrEmpty
 	}
 }
 

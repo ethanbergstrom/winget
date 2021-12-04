@@ -1,4 +1,5 @@
 function Find-WinGetPackage {
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification='Versions may not always be used, but are still required')]
 	param (
 		[Parameter(Mandatory=$true)]
 		[string]
