@@ -4,7 +4,7 @@
 WinGet for PackageManagement facilitates installing WinGet packages from any repository. The provider is heavily influenced by the work of the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
 
 ## Requirements
-Your machine must have at least Windows 10 1709 or Windows 11 and either PowerShell 5.1+ or PowerShell 7.01+, and the WinGet CLI utility installed. It may be already installed on your machine, but if not, Microsoft's recommended method for installing WinGet is via the Microsoft Store as part of the [App Installer](https://www.microsoft.com/en-us/p/app-installer/9nblggh4nns1?activetab=pivot:overviewtab) package.
+Your machine must have at least Windows 10 1709 or Windows 11 and either PowerShell 5.1+ or PowerShell 7.0.1+, and the WinGet CLI utility installed. It may be already installed on your machine, but if not, Microsoft's recommended method for installing WinGet is via the Microsoft Store as part of the [App Installer](https://www.microsoft.com/en-us/p/app-installer/9nblggh4nns1?activetab=pivot:overviewtab) package.
 
 **The WinGet Package Management Provider does not install the WinGet CLI utility.**
 
