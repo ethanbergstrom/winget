@@ -84,11 +84,6 @@ jobs:
         with:
           name: module
           path: '~/.local/share/powershell/Modules/WinGet'
-      - name: Publish Module
-        env:
-          NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        shell: pwsh
-        run: Write-Output "Publishing..."; Publish-Module -Name WinGet -NuGetApiKey $env:NUGET_KEY
       - name: Install Cobalt
         shell: pwsh
         run: Install-Module Cobalt -Force
