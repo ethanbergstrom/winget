@@ -45,7 +45,7 @@ function Install-Package {
 			-ErrorID 'JobFailure' `
 			-ErrorCategory InvalidOperation `
 		}
-		ConvertTo-SoftwareIdentity -InputObject $result
+		ConvertTo-SoftwareIdentity -InputObject $result -Source $WinGetParams.Source
 	) | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $WinGetParams.version -ErrorAction SilentlyContinue}
 
 	if (-Not $swid) {

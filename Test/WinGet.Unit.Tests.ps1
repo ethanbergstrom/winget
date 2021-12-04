@@ -3,7 +3,7 @@ param()
 
 BeforeAll {
 	$WinGet = 'WinGet'
-	Import-PackageProvider $WinGet -Force
+	Import-PackageProvider $WinGet
 }
 
 Describe 'basic package search operations' {
@@ -17,12 +17,6 @@ Describe 'basic package search operations' {
 		}
 		It 'searches for the latest version of a package' {
 			Find-Package -Provider $WinGet -Name $package | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
-		}
-		It 'searches for all versions of a package' {
-			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
-		}
-		It 'searches for the latest version of a package with a wildcard pattern' {
-			Find-Package -Provider $WinGet -Name "$package*" | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 	}
 }
@@ -105,7 +99,7 @@ Describe 'version filters' {
 			Find-Package -Provider $WinGet -Name $package -RequiredVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package -And $_.Version -eq $version} | Should -Not -BeNullOrEmpty
 		}
 		It 'finds and silently uninstalls a specific package version' {
-			Get-Package -Provider $WinGet -Name $package -RequiredVersion $version | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -And $_.Version -eq $version} | Should -Not -BeNullOrEmpty
+			Get-Package -Provider $WinGet -Name $package -RequiredVersion $version | UnInstall-Package | Where-Object {$_.Name -contains $package -And $_.Version -eq $version} | Should -Not -BeNullOrEmpty
 		}
 	}
 
@@ -114,13 +108,13 @@ Describe 'version filters' {
 			Find-Package -Provider $WinGet -Name $package -MinimumVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package -And $_.Version -ge $version} | Should -Not -BeNullOrEmpty
 		}
 		It 'finds and silently uninstalls a minimum package version' {
-			Get-Package -Provider $WinGet -Name $package -MinimumVersion $version | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -And $_.Version -ge $version} | Should -Not -BeNullOrEmpty
+			Get-Package -Provider $WinGet -Name $package -MinimumVersion $version | UnInstall-Package | Where-Object {$_.Name -contains $package -And $_.Version -ge $version} | Should -Not -BeNullOrEmpty
 		}
 	}
 
 	Context 'maximum version' {
 		It 'searches for and cannot find a maximum package version, because WinGet only returns the latest version' {
-			Find-Package -Provider $WinGet -Name $package -MaximumVersion $version | Should -BeNullOrEmpty
+			{Find-Package -Provider $WinGet -Name $package -MaximumVersion $version} | Should -Throw
 		}
 	}
 
@@ -133,7 +127,7 @@ Describe 'version filters' {
 			Find-Package -Provider $WinGet -Name $package -RequiredVersion 'latest' | Install-Package -Force | Where-Object {$_.Name -contains $package -And $_.Version -gt $version} | Should -Not -BeNullOrEmpty
 		}
 		It 'finds and silently uninstalls a specific package version' {
-			Get-Package -Provider $WinGet -Name $package -RequiredVersion 'latest' | UnInstall-Package -Force | Where-Object {$_.Name -contains $package -And $_.Version -gt $version} | Should -Not -BeNullOrEmpty
+			Get-Package -Provider $WinGet -Name $package -RequiredVersion 'latest' | UnInstall-Package | Where-Object {$_.Name -contains $package -And $_.Version -gt $version} | Should -Not -BeNullOrEmpty
 		}
 	}
 }

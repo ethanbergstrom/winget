@@ -3,6 +3,7 @@
 
 # Define provider related variables
 $script:AcceptLicense = "AcceptLicense"
+$script:Force = "Force"
 $script:PackageSource = "WinGet"
 
 # Utility variables
