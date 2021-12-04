@@ -33,7 +33,7 @@ function Get-InstalledPackage {
 	# If a user provides a name without a wildcard, include it in the search
 	# This provides wildcard search behavior for locally installed packages, which WinGet lacks
 	if ($Name) {
-		$WinGetParams.Add('Name',$Name)
+		$WinGetParams.Add('ID',$Name)
 		$WinGetParams.Add('Exact',$true)
 	}
 
