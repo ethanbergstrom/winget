@@ -1,3 +1,5 @@
+[![CI](https://github.com/ethanbergstrom/winget/actions/workflows/CI.yml/badge.svg)](https://github.com/ethanbergstrom/winget/actions/workflows/CI.yml)
+
 # WinGet
 WinGet is Package Management (OneGet) provider that facilitates installing WinGet packages from any repository. The provider is heavily influenced by the work of the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
 
