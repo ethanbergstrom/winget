@@ -4,71 +4,68 @@ function Find-WinGetPackage {
 		[string]
 		$Name,
 
+		[Parameter()]
 		[string]
 		$RequiredVersion,
 
+		[Parameter()]
 		[string]
 		$MinimumVersion,
 
+		[Parameter()]
 		[string]
 		$MaximumVersion
 	)
 
-	# Throw an error if provided version arguments don't make sense
-	Confirm-VersionParameters -Name $Name -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion -RequiredVersion $RequiredVersion
+	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Find-WinGetPackage'))
 
 	$options = $request.Options
-	foreach( $o in $options.Keys ) {
-		Write-Debug ( "OPTION: {0} => {1}" -f ($o, $options[$o]) )
-	}
+	[array]$RegisteredPackageSources = Cobalt\Get-WinGetSource
 
-	[array]$RegisteredPackageSources = Get-PackageSources
-
-	if ($options -and $options.ContainsKey('Source')) {
-		# Finding the matched package sources from the registered ones
-		Write-Verbose ($LocalizedData.SpecifiedSourceName -f ($options['Source']))
-		if ($RegisteredPackageSources.Name -eq $options['Source']) {
-			# Found the matched registered source
-			$selectedSource = $options['Source']
-		} else {
-			ThrowError -ExceptionName 'System.ArgumentException' `
-				-ExceptionMessage ($LocalizedData.PackageSourceNotFound -f ($options['Source'])) `
-				-ErrorId 'PackageSourceNotFound' `
+	$selectedSource = $(
+		if ($options -And $options.ContainsKey('Source')) {
+			# Finding the matched package sources from the registered ones
+			if ($RegisteredPackageSources.Name -eq $options['Source']) {
+				# Found the matched registered source
+				$options['Source']
+			} else {
+				ThrowError -ExceptionName 'System.ArgumentException' `
+				-ExceptionMessage ($LocalizedData.PackageSourceMissing) `
+				-ErrorId 'PackageSourceMissing' `
 				-ErrorCategory InvalidArgument `
-				-ExceptionObject $options['Source']
-		}
-	} else {
-		# User did not specify a source. Now what?
-		if ($RegisteredPackageSources.Count -eq 1) {
-			# If no source name is specified and only one source is available, use it
-			$selectedSource = $RegisteredPackageSources[0].Name
-		} elseif ($RegisteredPackageSources.Name -eq $script:PackageSourceName) {
-			# If multiple sources are avaiable but none specified, default to using WinGet.org - if present
-			$selectedSource = $script:PackageSourceName
+			}
 		} else {
-			# If WinGetately.org is not present and no source specified, throw an exception
-			ThrowError -ExceptionName 'System.ArgumentException' `
+			# User did not specify a source. Now what?
+			if ($RegisteredPackageSources.Count -eq 1) {
+				# If no source name is specified and only one source is available, use that source
+				$RegisteredPackageSources[0].Name
+			} elseif ($RegisteredPackageSources.Name -eq $script:PackageSource) {
+				# If multiple sources are avaiable but none specified, default to using WinGet packages - if present
+				$script:PackageSource
+			} else {
+				# If WinGet's default source is not present and no source specified, we can't guess what the user wants - throw an exception
+				ThrowError -ExceptionName 'System.ArgumentException' `
 				-ExceptionMessage $LocalizedData.UnspecifiedSource `
 				-ErrorId 'UnspecifiedSource' `
 				-ErrorCategory InvalidArgument
+			}
 		}
-	}
+	)
 
 	Write-Verbose "Source selected: $selectedSource"
 
 	$WinGetParams = @{
-		Search = $true
-		Package = $name
-		SourceName = $selectedSource
+		ID = $Name
+		Source = $selectedSource
+		Exact = $true
 	}
 
-	# WinGet does not support searching by min or max version, so if a user is picky we'll need to pull back the latest and see if it meets the requirements further down
 	if ($requiredVersion) {
 		$WinGetParams.Add('Version',$requiredVersion)
 	}
 
-	# Return the result without additional evaluation, even if empty, to let PackageManagement handle error management
-	# Will only terminate if Invoke-WinGet fails to call WinGet.exe
-	Invoke-WinGet @WinGetParams |
+	# Convert the PSCustomObject output from Cobalt into PackageManagement SWIDs, then filter results by any version requirements
+	# We have to specify the source when converting to SWIDs, because WinGet doesn't return source information when the source is specified
+	Cobalt\Find-WinGetPackage @WinGetParams | ConvertTo-SoftwareIdentity -Source $selectedSource
 		Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
 }

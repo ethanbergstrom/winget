@@ -10,12 +10,16 @@
 	PowerShellVersion = if ($PSEdition -eq 'Core') {
 		'7.0.1'
 	} else {
-		'3.0'
+		'5.1'
 	}
 	RequiredModules = @(
 		@{
-			ModuleName='PackageManagement';
+			ModuleName='PackageManagement'
 			ModuleVersion='1.1.7.2'
+		},
+		@{
+			ModuleName='Cobalt'
+			ModuleVersion='0.0.2'
 		}
 	)
 	PrivateData = @{

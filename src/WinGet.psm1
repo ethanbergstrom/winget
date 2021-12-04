@@ -1,35 +1,25 @@
-#region Private Variables
 # Current script path
 [string]$ScriptPath = Split-Path (Get-Variable MyInvocation -Scope Script).Value.MyCommand.Definition -Parent
 
 # Define provider related variables
-$script:ProviderName = "WinGet"
-$script:PackageSourceName = "WinGet"
-$script:additionalArguments = "AdditionalArguments"
-$script:AllVersions = "AllVersions"
 $script:AcceptLicense = "AcceptLicense"
-
-# Define WinGet related variables
-$script:WinGetExeName = 'WinGet.exe'
+$script:AdditionalArguments = "AdditionalArguments"
+$script:AllVersions = "AllVersions"
+$script:PackageSource = "WinGet"
 
 # Utility variables
+# Fast Package References are passed between cmdlets in the format of '<name>#<version>#<source>'
+# See https://github.com/OneGet/oneget/wiki/PackageProvider-Interface for additional details
 $script:FastReferenceRegex = "(?<name>[^#]*)#(?<version>[^\s]*)#(?<source>[^#]*)"
 
-Import-LocalizedData LocalizedData -filename "$script:ProviderName.Resource.psd1"
-
-#endregion Private Variables
-
-#region Methods
+Import-LocalizedData LocalizedData -filename "WinGet.Resource.psd1"
 
 # Dot sourcing private script files
-Get-ChildItem $ScriptPath/src/private -Recurse -Filter '*.ps1' -File | ForEach-Object {
+Get-ChildItem $ScriptPath/private -Recurse -Filter '*.ps1' -File | ForEach-Object {
 	. $_.FullName
 }
-
-# Load and export methods
-
 # Dot sourcing public function files
-Get-ChildItem $ScriptPath/src/public -Recurse -Filter '*.ps1' -File | ForEach-Object {
+Get-ChildItem $ScriptPath/public -Recurse -Filter '*.ps1' -File | ForEach-Object {
 	. $_.FullName
 
 	# Find all the functions defined no deeper than the first level deep and export it.
@@ -38,10 +28,4 @@ Get-ChildItem $ScriptPath/src/public -Recurse -Filter '*.ps1' -File | ForEach-Ob
 		Export-ModuleMember $_.Name
 	}
 }
-#endregion Methods
 
-#region Module Cleanup
-$ExecutionContext.SessionState.Module.OnRemove = {
-	# cleanup when unloading module (if any)
-}
-#endregion Module Cleanup

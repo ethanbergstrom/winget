@@ -1,5 +1,5 @@
 # WinGet
-WinGet is Package Management (OneGet) provider that facilitates installing WinGet packages from any repository. The provider is heavily influenced by the work of the [Chocolatier](https://github.com/ethanbergstrom/Chocolatier) project.
+WinGet is Package Management (OneGet) provider that facilitates installing WinGet packages from any repository. The provider is heavily influenced by the work of the [ChocolateyGet](https://github.com/jianyunt/ChocolateyGet) project.
 
 ## Install WinGet
 ```PowerShell
@@ -58,11 +58,7 @@ Configuration MyNode {
 WinGet is still in a preview period, with many features not implemented that are required for a PackageManagement provider to be properly implemented.
 
 Unsupported features currently include:
-* Listing installed packages
-* Upgrading installed packages
-* Uninstalling packages
 * Searching for packages by version range
-* Saving packages
 * Passing install arguments to packages
 
 ## Legal and Licensing

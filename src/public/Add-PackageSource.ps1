@@ -11,20 +11,22 @@ function Add-PackageSource {
 		[string]
 		$Location,
 
+		[Parameter()]
 		[bool]
 		$Trusted
 	)
 
+	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Add-PackageSource'))
 	Write-Verbose "New package source: $Name, $Location"
 
-	Invoke-WinGet -SourceAdd -SourceName $Name -SourceLocation $Location
+	Cobalt\Register-WinGetSource -Name $Name -Argument $Location
 
-	# Add new package source
+	# Cobalt doesn't return anything after new sources are registered, but PackageManagement expects a response
 	$packageSource = @{
 		Name = $Name
 		Location = $Location.TrimEnd("\")
-		Trusted=$Trusted
-		Registered= $true
+		Trusted = $Trusted
+		Registered = $true
 	}
 
 	New-PackageSource @packageSource
