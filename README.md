@@ -85,7 +85,7 @@ OpenJS.NodeJS                  16.0.0           winget
 PS C:\Users\ethan> Get-Package OpenJS.NodeJS -Provider WinGet -RequiredVersion latest
 Get-Package : No package found for 'OpenJS.NodeJS'.
 
-PS C:\Users\ethan> Install-Package OpenJS.NodeJS -Provider WinGet -RequiredVersion latest -Force
+PS C:\Users\ethan> Install-Package OpenJS.NodeJS -Provider WinGet -Force
 
 Name                           Version          Source           Summary
 ----                           -------          ------           -------
