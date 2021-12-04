@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.0.3 - 2021-12-04 - Installed Package Wildcard Search Support
+### Added
+* Installed packages can now be searched with wildcards, aligning with standard PowerShell behavior
+
 ## 0.0.2 - 2021-12-04 - WinGet v1.x support and PowerShell Crescendo
 ### Added
 * Support for WinGet v1.x, which brings several new features
