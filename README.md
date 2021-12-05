@@ -24,9 +24,9 @@ Find-Package Mozilla.Firefox -Provider WinGet
 
 ### Install a package
 ```PowerShell
-Find-Package OpenJS.NodeJS -Provider WinGet | Install-Package
+Find-Package OpenJS.NodeJS -Provider WinGet | Install-Package -Force
 
-Install-Package Mozilla.Firefox -Provider WinGet
+Install-Package Mozilla.Firefox -Provider WinGet -Force
 ```
 
 ### Get list of installed packages (with wildcard search support)
@@ -36,7 +36,9 @@ Get-Package Microsoft.* -Provider WinGet
 
 ### Uninstall a package
 ```PowerShell
-Get-Package Mozilla.Firefox -Provider WinGet | Uninstall-Package
+Get-Package OpenJS.NodeJS -Provider WinGet | Uninstall-Package
+
+Uninstall-Package Mozilla.Firefox -Provider WinGet
 ```
 
 ### Manage package sources
