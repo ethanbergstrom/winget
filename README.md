@@ -110,7 +110,7 @@ Configuration MyNode {
 		Name = 'WinGet'
 		Source = 'PSGallery'
 	}
-	PackageManagement SysInternals {
+	PackageManagement NodeJS {
 		Name = 'OpenJS.NodeJS'
 		RequiredVersion = 'latest'
 		ProviderName = 'WinGet'
