@@ -156,6 +156,8 @@ Configuration MyNode {
 }
 ```
 
+A working example PowerShell DSC script with automatic package updates can be found [here](https://gist.github.com/ethanbergstrom/9a4a0d29ea0452ef46bba580a7567d98).
+
 If using the 'latest' functionality, best practice is to either:
 * use the default WinGet source
 * unregister the default WinGet source in favor of a **single** custom source
