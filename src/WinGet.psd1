@@ -35,7 +35,7 @@
 			ProjectUri = 'https://github.com/ethanbergstrom/WinGet'
 
 			# ReleaseNotes of this module
-			ReleaseNotes = 'Please see https://github.com/ethanbergstrom/WinGet/blob/current/CHANGELOG.md for release notes'
+			ReleaseNotes = 'Please see https://github.com/ethanbergstrom/winget/blob/master/CHANGELOG.md for release notes'
 		}
 	}
 }
