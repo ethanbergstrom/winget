@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.0.4 - 2021-12-26 - Force native command encoding
+### Added
+* Automatically force PowerShell to interpet native console output with UTF8 encoding
+
 ## 0.0.3 - 2021-12-04 - Installed Package Wildcard Search Support
 ### Added
 * Installed packages can now be searched with wildcards, aligning with standard PowerShell behavior
