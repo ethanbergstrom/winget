@@ -28,3 +28,5 @@ Get-ChildItem $ScriptPath/public -Recurse -Filter '*.ps1' -File | ForEach-Object
 	}
 }
 
+# Forces PowerShell to interpret output from native commands using UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
