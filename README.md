@@ -10,7 +10,7 @@ Your machine must have at least Windows 10 1709 or Windows 11 and either PowerSh
 
 ## Install WinGet
 ```PowerShell
-Install-PackageProvider WinGet -Scope CurrentUser -Force
+Install-PackageProvider WinGet/ -Force
 ```
 Note: Please do **not** use `Import-Module` with Package Management providers, as they are not meant to be imported in that manner. Either use `Import-PackageProvider` or specify the provider name with the `-Provider` argument to the PackageManagement cmdlets, such as in the examples below:
 
