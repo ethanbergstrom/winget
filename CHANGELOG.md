@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.0.5 - 2022-01-13 - Force dependency checks
+### Fixed
+* PowerShellGet dependency checks
+
 ## 0.0.4 - 2021-12-26 - Force native command encoding
 ### Added
 * Automatically force PowerShell to interpet native console output with UTF8 encoding
