@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.0.6 - 2022-02-06 - Force dependency checks
+### Fixed
+* Installed package version checks
+
 ## 0.0.5 - 2022-01-13 - Force dependency checks
 ### Fixed
 * PowerShellGet dependency checks
