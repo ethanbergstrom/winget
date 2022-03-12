@@ -29,7 +29,8 @@ function Get-InstalledPackage {
 
 	# Convert the PSCustomObject output from Cobalt into PackageManagement SWIDs, then filter results by version requirements
 	# This provides wildcard search behavior for locally installed packages, which WinGet lacks
-	Cobalt\Get-WinGetPackage | ConvertTo-SoftwareIdentity |
-		Where-Object {-Not $Name -Or ($_.Name -Like $Name)} |
-			Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
+	Cobalt\Get-WinGetPackage |
+		Where-Object {-Not $Name -Or ($_.ID -Like $Name)} |
+			ConvertTo-SoftwareIdentity |
+				Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
 }
