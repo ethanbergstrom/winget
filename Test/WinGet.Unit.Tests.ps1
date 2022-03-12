@@ -18,6 +18,12 @@ Describe 'basic package search operations' {
 		It 'searches for the latest version of a package' {
 			Find-Package -Provider $WinGet -Name $package | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
+		It 'returns additional package metadata' {
+			Find-Package -Provider $WinGet -Name $package | Select-Object -ExpandProperty 'Download URL' | Should -Not -BeNullOrEmpty
+		}
+		It 'searches for all versions of a package' {
+			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+		}
 	}
 }
 

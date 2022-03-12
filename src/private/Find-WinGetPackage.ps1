@@ -63,6 +63,22 @@ function Find-WinGetPackage {
 
 	# Convert the PSCustomObject output from Cobalt into PackageManagement SWIDs, then filter results by any version requirements
 	# We have to specify the source when converting to SWIDs, because WinGet doesn't return source information when the source is specified
-	Cobalt\Find-WinGetPackage @WinGetParams | ConvertTo-SoftwareIdentity -Source $selectedSource |
-		Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion -Debug}
+	Cobalt\Find-WinGetPackage @WinGetParams | ForEach-Object {
+		# If we need to retrieve all versions, perform an additional query to get all available versions, and create a package object for each version
+		if ($options.ContainsKey($script:AllVersions)) {
+			$package = $_
+			$package | Get-WinGetPackageInfo -Versions | Select-Object -Property @{
+				Name = 'ID'
+				Expression = {$package.ID}
+			},@{
+				Name = 'Version'
+				Expression = {$_}
+			},@{
+				Name = 'Source'
+				Expression = {$package.Source}
+			}
+		} else {
+			$_
+		}
+	} | ConvertTo-SoftwareIdentity -Source $selectedSource | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion -Debug}
 }

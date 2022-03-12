@@ -1,6 +1,6 @@
 @{
 	RootModule = 'WinGet.psm1'
-	ModuleVersion = '0.0.6'
+	ModuleVersion = '0.0.7'
 	GUID = '468ef37a-2557-4c10-92ec-783ec1e41639'
 	Author = 'Ethan Bergstrom'
 	Copyright = ''
