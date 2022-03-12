@@ -19,7 +19,7 @@
 		},
 		@{
 			ModuleName='Cobalt'
-			ModuleVersion='0.0.10'
+			ModuleVersion='0.2.0'
 		}
 	)
 	PrivateData = @{
