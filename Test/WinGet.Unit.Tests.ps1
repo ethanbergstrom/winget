@@ -77,7 +77,7 @@ Describe 'version tests' {
 		}
 
 		It 'retrieves and correctly filters versions within a range' {
-			Find-Package -Provider $WinGet -Name $package -MaximumVersion $maxVersion -MinimumVersion $minVersion | Where-Object {$_.Name -contains $package} | Should -HaveCount 2
+			Find-Package -Provider $WinGet -Name $package -MaximumVersion $maxVersion -MinimumVersion $minVersion -AllVersions | Where-Object {$_.Name -contains $package} | Should -HaveCount 2
 		}
 	}
 }
