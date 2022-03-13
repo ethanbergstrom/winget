@@ -39,16 +39,16 @@ Describe 'DSC-compliant package installation and uninstallation' {
 		}
 
 		It 'searches for a specific version of a package' {
-			Find-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+			Find-Package -Provider $WinGet -Name $package -Version $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 		It 'silently installs a specific version of a package' {
-			Install-Package -Provider $WinGet -Name $package -RequiredVersion $version -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+			Install-Package -Provider $WinGet -Name $package -Version $version -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 		It 'finds the locally installed package just installed' {
-			Get-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+			Get-Package -Provider $WinGet -Name $package -Version $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 		It 'silently uninstalls the locally installed package just installed' {
-			Uninstall-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+			Uninstall-Package -Provider $WinGet -Name $package -Version $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 	}
 }
@@ -88,7 +88,7 @@ Describe "multi-source support" {
 		Register-PackageSource -Name $altSourceName -Provider $WinGet -Location $altSourceLocation | Where-Object {$_.Name -eq $altSourceName} | Should -Not -BeNullOrEmpty
 	}
 	It 'searches for and installs the latest version of a package from an alternate source' {
-		Find-Package -Provider $WinGet -Name $package -Source $altSourceName -RequiredVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+		Find-Package -Provider $WinGet -Name $package -Source $altSourceName -Version $version | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 	}
 	It 'unregisters an alternative package source' {
 		Unregister-PackageSource -Name $altSourceName -Provider $WinGet
