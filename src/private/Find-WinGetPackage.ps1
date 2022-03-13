@@ -80,5 +80,5 @@ function Find-WinGetPackage {
 		} else {
 			$_
 		}
-	} | ConvertTo-SoftwareIdentity -Source $selectedSource | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion -Debug}
+	} | ConvertTo-SoftwareIdentity -Source $selectedSource | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
 }
