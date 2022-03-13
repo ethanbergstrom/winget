@@ -9,7 +9,7 @@ BeforeAll {
 Describe 'basic package search operations' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'CPUID.CPU-Z'
+			$package = 'CPUID.HWMonitor'
 		}
 
 		It 'gets a list of latest installed packages' {
@@ -30,7 +30,7 @@ Describe 'basic package search operations' {
 Describe 'DSC-compliant package installation and uninstallation' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'CPUID.CPU-Z'
+			$package = 'CPUID.HWMonitor'
 		}
 
 		It 'searches for the latest version of a package' {
@@ -51,7 +51,7 @@ Describe 'DSC-compliant package installation and uninstallation' {
 Describe 'pipeline-based package installation and uninstallation' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'CPUID.CPU-Z'
+			$package = 'CPUID.HWMonitor'
 		}
 
 		It 'searches for and silently installs the latest version of a package' {
@@ -67,7 +67,7 @@ Describe "multi-source support" {
 	BeforeAll {
 		$altSourceName = 'AltWinGetSource'
 		$altSourceLocation = 'https://winget.azureedge.net/cache'
-		$package = 'CPUID.CPU-Z'
+		$package = 'CPUID.HWMonitor'
 
 		Unregister-PackageSource -Name $altSourceName -Provider $WinGet -ErrorAction SilentlyContinue
 	}
