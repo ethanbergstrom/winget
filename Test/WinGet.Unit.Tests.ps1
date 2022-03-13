@@ -9,7 +9,8 @@ BeforeAll {
 Describe 'basic package search operations' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'CPUID.CPU-Z'
+			$package = 'CPUID.HWMonitor'
+			$version = '1.44'
 		}
 
 		It 'gets a list of latest installed packages' {
@@ -18,26 +19,36 @@ Describe 'basic package search operations' {
 		It 'searches for the latest version of a package' {
 			Find-Package -Provider $WinGet -Name $package | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
+		It 'returns all available versions of a package' {
+			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Version -eq $version} | Should -Not -BeNullOrEmpty
+		}
+		It 'returns additional package metadata' {
+			Find-Package -Provider $WinGet -Name $package | Select-Object -ExpandProperty FullPath | Should -Not -BeNullOrEmpty
+		}
+		It 'searches for all versions of a package' {
+			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+		}
 	}
 }
 
 Describe 'DSC-compliant package installation and uninstallation' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'CPUID.CPU-Z'
+			$package = 'CPUID.HWMonitor'
+			$version = '1.44'
 		}
 
-		It 'searches for the latest version of a package' {
-			Find-Package -Provider $WinGet -Name $package | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+		It 'searches for a specific version of a package' {
+			Find-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
-		It 'silently installs the latest version of a package' {
-			Install-Package -Provider $WinGet -Name $package -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+		It 'silently installs a specific version of a package' {
+			Install-Package -Provider $WinGet -Name $package -RequiredVersion $version -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 		It 'finds the locally installed package just installed' {
-			Get-Package -Provider $WinGet -Name $package | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+			Get-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 		It 'silently uninstalls the locally installed package just installed' {
-			Uninstall-Package -Provider $WinGet -Name $package | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+			Uninstall-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 	}
 }
@@ -45,7 +56,7 @@ Describe 'DSC-compliant package installation and uninstallation' {
 Describe 'pipeline-based package installation and uninstallation' {
 	Context 'without additional arguments' {
 		BeforeAll {
-			$package = 'CPUID.CPU-Z'
+			$package = 'CPUID.HWMonitor'
 		}
 
 		It 'searches for and silently installs the latest version of a package' {
@@ -57,11 +68,26 @@ Describe 'pipeline-based package installation and uninstallation' {
 	}
 }
 
+Describe 'version tests' {
+	Context 'without additional arguments' {
+		BeforeAll {
+			$package = 'CPUID.HWMonitor'
+			$minVersion = '1.43'
+			$maxVersion = '1.44'
+		}
+
+		It 'retrieves and correctly filters versions within a range' {
+			Find-Package -Provider $WinGet -Name $package -MaximumVersion $maxVersion -MinimumVersion $minVersion -AllVersions | Where-Object {$_.Name -contains $package} | Should -HaveCount 2
+		}
+	}
+}
+
 Describe "multi-source support" {
 	BeforeAll {
 		$altSourceName = 'AltWinGetSource'
 		$altSourceLocation = 'https://winget.azureedge.net/cache'
-		$package = 'CPUID.CPU-Z'
+		$package = 'CPUID.HWMonitor'
+		$version = '1.44'
 
 		Unregister-PackageSource -Name $altSourceName -Provider $WinGet -ErrorAction SilentlyContinue
 	}
@@ -76,7 +102,7 @@ Describe "multi-source support" {
 		Register-PackageSource -Name $altSourceName -Provider $WinGet -Location $altSourceLocation | Where-Object {$_.Name -eq $altSourceName} | Should -Not -BeNullOrEmpty
 	}
 	It 'searches for and installs the latest version of a package from an alternate source' {
-		Find-Package -Provider $WinGet -Name $package -source $altSourceName | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
+		Find-Package -Provider $WinGet -Name $package -Source $altSourceName -RequiredVersion $version | Install-Package -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 	}
 	It 'unregisters an alternative package source' {
 		Unregister-PackageSource -Name $altSourceName -Provider $WinGet

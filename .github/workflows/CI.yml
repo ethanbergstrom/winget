@@ -34,7 +34,7 @@ jobs:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\WinGet\
       - name: Install WinGet
         shell: pwsh
-        run: .\Install-WinGet.ps1
+        run: Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ethanbergstrom/Cobalt/master/Install-WinGet.ps1'))
       - name: Install Cobalt
         run: Install-Module Cobalt -Force
       - name: Test with Pester

@@ -21,6 +21,10 @@ Find-Package OpenJS.NodeJS -Provider WinGet
 
 Find-Package Mozilla.Firefox -Provider WinGet
 ```
+### Find all available versions of a package
+```PowerShell
+Find-Package Mozilla.Firefox -Provider WinGet -AllVersions
+```
 
 ### Install a package
 ```PowerShell
@@ -166,7 +170,6 @@ If using the 'latest' functionality, best practice is to either:
 WinGet is still in a preview period, with many features not implemented that are required for a PackageManagement provider to be fully implemented.
 
 Unsupported features currently include:
-* Searching for packages by version range
 * Passing install arguments to packages
 * Saving a package
 
