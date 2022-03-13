@@ -31,6 +31,6 @@ function Get-InstalledPackage {
 	# This provides wildcard search behavior for locally installed packages, which WinGet lacks
 	Cobalt\Get-WinGetPackage |
 		Where-Object {-Not $Name -Or ($_.ID -Like $Name)} |
-			ConvertTo-SoftwareIdentity |
-				Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion}
+			Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $RequiredVersion -MinimumVersion $MinimumVersion -MaximumVersion $MaximumVersion} |
+				ConvertTo-SoftwareIdentity
 }
