@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## 0.0.7 - 2022-03-12 - Additional Package Details
 ### Added
 * Include package summary and download URL in software identities
-* Support for the PackageManagement `AllVersions` parameter
+* Support for the Find-Package `AllVersions` parameter
 
 ## 0.0.6 - 2022-02-06 - Force dependency checks
 ### Fixed

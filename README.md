@@ -21,6 +21,10 @@ Find-Package OpenJS.NodeJS -Provider WinGet
 
 Find-Package Mozilla.Firefox -Provider WinGet
 ```
+### Find all available versions of a package
+```PowerShell
+Find-Package Mozilla.Firefox -Provider WinGet -AllVersions
+```
 
 ### Install a package
 ```PowerShell
