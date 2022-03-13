@@ -68,6 +68,20 @@ Describe 'pipeline-based package installation and uninstallation' {
 	}
 }
 
+Describe 'version tests' {
+	Context 'without additional arguments' {
+		BeforeAll {
+			$package = 'CPUID.HWMonitor'
+			$minVersion = '1.43'
+			$maxVersion = '1.44'
+		}
+
+		It 'retrieves and correctly filters versions within a range' {
+			Find-Package -Provider $WinGet -Name $package -MaximumVersion $maxVersion -MinimumVersion $minVersion | Where-Object {$_.Name -contains $package} | Should -HaveCount 2
+		}
+	}
+}
+
 Describe "multi-source support" {
 	BeforeAll {
 		$altSourceName = 'AltWinGetSource'
