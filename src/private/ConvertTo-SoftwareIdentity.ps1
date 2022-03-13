@@ -24,7 +24,7 @@ function ConvertTo-SoftwareIdentity {
 			)
 			if ($packageSource) {
 				Write-Debug "Package identified: $($package.ID), $($package.version), $($packageSource)"
-				$metadata = $package | Cobalt\Get-WinGetPackageInfo
+				$metadata = Cobalt\Get-WinGetPackageInfo -ID $package.ID -Version $package.Version -Source $packageSource
 				$swid = @{
 					FastPackageReference = $package.ID+"#"+ $package.version+"#"+$packageSource
 					Name = $package.ID
