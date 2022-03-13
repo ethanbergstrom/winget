@@ -35,18 +35,8 @@ function Install-Package {
 		Source = $Matches.source
 	}
 
-	# Convert the PSCustomObject output from Cobalt into PackageManagement SWIDs, then validate what WinGet installed matched what we requested
-	$swid = $(
-		$result = Cobalt\Install-WinGetPackage @WinGetParams
-		# If Cobalt didn't return anything, something went wrong and we need to throw our own exception
-		if (-Not $result) {
-			ThrowError -ExceptionName 'System.OperationCanceledException' `
-			-ExceptionMessage $LocalizedData.WinGetFailure `
-			-ErrorID 'JobFailure' `
-			-ErrorCategory InvalidOperation `
-		}
-		ConvertTo-SoftwareIdentity -InputObject $result -Source $WinGetParams.Source
-	) | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $WinGetParams.version -ErrorAction SilentlyContinue}
+	# Validate what WinGet installed matched what we requested, then convert the PSCustomObject output from Cobalt into PackageManagement SWIDs
+	$swid = Cobalt\Install-WinGetPackage @WinGetParams | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $WinGetParams.version -ErrorAction SilentlyContinue} | ConvertTo-SoftwareIdentity -Source $WinGetParams.Source
 
 	if (-Not $swid) {
 		# Cobalt returned something, but not in the format we expected. Something is amiss.
