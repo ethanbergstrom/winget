@@ -45,8 +45,8 @@ function Install-Package {
 			-ErrorID 'JobFailure' `
 			-ErrorCategory InvalidOperation `
 		}
-		Where-Object {Test-PackageVersion -Package $result -RequiredVersion $WinGetParams.version -ErrorAction SilentlyContinue}
-	) | ConvertTo-SoftwareIdentity -Source $WinGetParams.Source
+		ConvertTo-SoftwareIdentity -InputObject $result -Source $WinGetParams.Source
+	) | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $WinGetParams.version -ErrorAction SilentlyContinue}
 
 	if (-Not $swid) {
 		# Cobalt returned something, but not in the format we expected. Something is amiss.

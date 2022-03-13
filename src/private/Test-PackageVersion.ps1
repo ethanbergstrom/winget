@@ -4,6 +4,7 @@ function Test-PackageVersion {
 	[OutputType([bool])]
 	param (
 		[Parameter(Mandatory=$true)]
+		[Microsoft.PackageManagement.MetaProvider.PowerShell.SoftwareIdentity]
 		$Package,
 
 		[Parameter()]
