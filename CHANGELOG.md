@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.0.8 - 2022-05-14 - Performance Improvement
+### Changed
+* No longer include package summary and download URL in package data by default, now accessible with the `-Detailed` switch
+
 ## 0.0.7 - 2022-03-12 - Additional Package Details
 ### Added
 * Include package summary and download URL in package data

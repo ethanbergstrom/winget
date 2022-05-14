@@ -19,8 +19,9 @@ Note: Please do **not** use `Import-Module` with Package Management providers, a
 ```PowerShell
 Find-Package OpenJS.NodeJS -Provider WinGet
 
-Find-Package Mozilla.Firefox -Provider WinGet
+Find-Package Mozilla.Firefox -Provider WinGet -Detailed
 ```
+
 ### Find all available versions of a package
 ```PowerShell
 Find-Package Mozilla.Firefox -Provider WinGet -AllVersions
