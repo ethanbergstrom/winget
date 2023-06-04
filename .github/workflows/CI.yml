@@ -34,10 +34,11 @@ jobs:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\WinGet\
       - name: Install WinGet
         shell: pwsh
-        run: Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ethanbergstrom/Cobalt/master/Install-WinGet.ps1'))
+        run: .\Install-WinGet.ps1
       - name: Install Microsoft.WinGet.Client
         run: Install-Module Microsoft.WinGet.Client -Force
       - name: Test with Pester
+        shell: pwsh
         run: |
           Invoke-Pester -Configuration (New-PesterConfiguration -Hashtable @{
             Run = @{
