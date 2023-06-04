@@ -18,8 +18,8 @@
 			ModuleVersion='1.1.7.2'
 		},
 		@{
-			ModuleName='Cobalt'
-			ModuleVersion='0.2.0'
+			ModuleName='Microsoft.WinGet.Client'
+			ModuleVersion='0.2.1'
 		}
 	)
 	PrivateData = @{

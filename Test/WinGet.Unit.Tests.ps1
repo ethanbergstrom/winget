@@ -22,9 +22,6 @@ Describe 'basic package search operations' {
 		It 'returns all available versions of a package' {
 			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Version -eq $version} | Should -Not -BeNullOrEmpty
 		}
-		It 'returns additional package metadata' {
-			Find-Package -Provider $WinGet -Name $package -Detailed | Select-Object -ExpandProperty FullPath | Should -Not -BeNullOrEmpty
-		}
 		It 'searches for all versions of a package' {
 			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
