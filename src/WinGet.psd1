@@ -1,25 +1,21 @@
 @{
 	RootModule = 'WinGet.psm1'
-	ModuleVersion = '0.0.8'
+	ModuleVersion = '0.1.0'
 	GUID = '468ef37a-2557-4c10-92ec-783ec1e41639'
 	Author = 'Ethan Bergstrom'
 	Copyright = ''
 	Description = 'Package Management (OneGet) provider that facilitates installing WinGet packages from any NuGet repository.'
 	# Refuse to load in CoreCLR if PowerShell below 7.0.1 due to regressions with how 7.0 loads PackageManagement DLLs
 	# https://github.com/PowerShell/PowerShell/pull/12203
-	PowerShellVersion = if ($PSEdition -eq 'Core') {
-		'7.0.1'
-	} else {
-		'5.1'
-	}
+	PowerShellVersion = '7.0.1'
 	RequiredModules = @(
 		@{
 			ModuleName='PackageManagement'
 			ModuleVersion='1.1.7.2'
 		},
 		@{
-			ModuleName='Cobalt'
-			ModuleVersion='0.2.0'
+			ModuleName='Microsoft.WinGet.Client'
+			ModuleVersion='0.2.1'
 		}
 	)
 	PrivateData = @{

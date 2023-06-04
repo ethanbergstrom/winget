@@ -5,7 +5,7 @@ function Resolve-PackageSource {
 	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Resolve-PackageSource'))
 
 	# Get sources from WinGet
-	Cobalt\Get-WinGetSource | ForEach-Object {
-		New-PackageSource -Name $_.Name -Location $_.Arg -Trusted $true -Registered $true
+	Microsoft.WinGet.Client\Get-WinGetSource | ForEach-Object {
+		New-PackageSource -Name $_.Name -Location $_.Argument -Trusted $true -Registered $true
 	}
 }

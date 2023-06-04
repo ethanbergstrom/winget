@@ -1,4 +1,4 @@
-# Convert the objects returned from Cobalt into Software Identities (SWIDs).
+# Convert the objects returned from Microsoft.WinGet.Client into Software Identities (SWIDs).
 function ConvertTo-SoftwareIdentity {
 	[CmdletBinding()]
 	param (
@@ -14,7 +14,7 @@ function ConvertTo-SoftwareIdentity {
 	process {
 		Write-Debug ($LocalizedData.ProviderDebugMessage -f ('ConvertTo-SoftwareIdentity'))
 		foreach ($package in $InputObject) {
-			# Return a new SWID based on the output from Cobalt
+			# Return a new SWID based on the output from Microsoft.WinGet.Client
 			$packageSource = $(
 				if ($package.source) {
 					$package.source
@@ -31,12 +31,6 @@ function ConvertTo-SoftwareIdentity {
 					versionScheme = "MultiPartNumeric"
 					FromTrustedSource = $true
 					Source = $packageSource
-				}
-
-				if ($request.Options.ContainsKey($script:Detailed)) {
-					$metadata = Cobalt\Get-WinGetPackageInfo -ID $package.ID -Version $package.Version -Source $packageSource
-					$swid.Summary = $metadata.Description
-					$swid.FullPath = $metadata.'Download URL'
 				}
 
 				New-SoftwareIdentity @swid

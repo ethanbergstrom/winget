@@ -21,7 +21,7 @@ function Find-WinGetPackage {
 	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Find-WinGetPackage'))
 
 	$options = $request.Options
-	[array]$RegisteredPackageSources = Cobalt\Get-WinGetSource
+	[array]$RegisteredPackageSources = Microsoft.WinGet.Client\Get-WinGetSource
 
 	$selectedSource = $(
 		if ($options -And $options.ContainsKey('Source')) {
@@ -58,16 +58,16 @@ function Find-WinGetPackage {
 	$WinGetParams = @{
 		ID = $Name
 		Source = $selectedSource
-		Exact = $true
+		MatchOption = 'EqualsCaseInsensitive'
 	}
 
-	# Convert the PSCustomObject output from Cobalt into PackageManagement SWIDs, then filter results by any version requirements
+	# Convert the PSCustomObject output from Microsoft.WinGet.Client into PackageManagement SWIDs, then filter results by any version requirements
 	# We have to specify the source when converting to SWIDs, because WinGet doesn't return source information when the source is specified
-	Cobalt\Find-WinGetPackage @WinGetParams | ForEach-Object {
+	Microsoft.WinGet.Client\Find-WinGetPackage @WinGetParams | ForEach-Object {
 		# If we need to retrieve all versions, perform an additional query to get all available versions, and create a package object for each version
 		if ($RequiredVersion -Or $minimumVersion -Or $maximumVersion -Or $options.ContainsKey($script:AllVersions)) {
 			$package = $_
-			$package | Get-WinGetPackageInfo -Versions -Source $selectedSource | Select-Object -Property @{
+			$package.AvailableVersions | Select-Object -Property @{
 				Name = 'ID'
 				Expression = {$package.ID}
 			},@{

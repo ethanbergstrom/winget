@@ -35,13 +35,8 @@ function Install-Package {
 		Source = $Matches.source
 	}
 
-	# Validate what WinGet installed matched what we requested, then convert the PSCustomObject output from Cobalt into PackageManagement SWIDs
-	$swid = Cobalt\Install-WinGetPackage @WinGetParams | Where-Object {Test-PackageVersion -Package $_ -RequiredVersion $WinGetParams.version -ErrorAction SilentlyContinue} | ConvertTo-SoftwareIdentity -Source $WinGetParams.Source
+	Install-WinGetPackage @WinGetParams
 
-	if (-Not $swid) {
-		# Cobalt returned something, but not in the format we expected. Something is amiss.
-		Write-Warning ($LocalizedData.UnexpectedWinGetResponse -f $FastPackageReference)
-	}
-
-	$swid
+	#Microsoft.WinGet.Client doesn't return any package data on successful uninstallation, so we have to make up a new SWID to satisfy PackageManagement
+	ConvertTo-SoftwareIdentity -InputObject @($WinGetParams)
 }

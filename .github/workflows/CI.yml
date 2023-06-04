@@ -34,10 +34,11 @@ jobs:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\WinGet\
       - name: Install WinGet
         shell: pwsh
-        run: Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/ethanbergstrom/Cobalt/master/Install-WinGet.ps1'))
-      - name: Install Cobalt
-        run: Install-Module Cobalt -Force
+        run: .\Install-WinGet.ps1
+      - name: Install Microsoft.WinGet.Client
+        run: Install-Module Microsoft.WinGet.Client -Force
       - name: Test with Pester
+        shell: pwsh
         run: |
           Invoke-Pester -Configuration (New-PesterConfiguration -Hashtable @{
             Run = @{
@@ -84,9 +85,9 @@ jobs:
         with:
           name: module
           path: '~/.local/share/powershell/Modules/WinGet'
-      - name: Install Cobalt
+      - name: Install Microsoft.WinGet.Client
         shell: pwsh
-        run: Install-Module Cobalt -Force
+        run: Install-Module Microsoft.WinGet.Client -Force
       - name: Publish Module
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}

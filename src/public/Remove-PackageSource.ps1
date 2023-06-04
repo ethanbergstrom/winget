@@ -9,7 +9,7 @@ function Remove-PackageSource {
 
 	Write-Debug ($LocalizedData.ProviderDebugMessage -f ('Remove-PackageSource'))
 
-	[array]$RegisteredPackageSources = Cobalt\Get-WinGetSource
+	[array]$RegisteredPackageSources = Microsoft.WinGet.Client\Get-WinGetSource
 
 	# WinGet.exe will not error if the specified source name isn't already registered, so we will do it here instead.
 	if (-not ($RegisteredPackageSources.Name -eq $Name)) {
@@ -19,6 +19,6 @@ function Remove-PackageSource {
 			-ErrorCategory InvalidArgument
 	}
 
-	# Cobalt will throw an exception if unregistration fails
-	Cobalt\Unregister-WinGetSource -Name $Name
+	# Microsoft.WinGet.Client will throw an exception if unregistration fails
+	Microsoft.WinGet.Client\Remove-WinGetSource -Name $Name
 }

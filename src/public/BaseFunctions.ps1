@@ -22,11 +22,9 @@ function Get-DynamicOptions {
 	switch ($category) {
 		Package {
 			Write-Output -InputObject (New-DynamicOption -Category $category -Name $script:AcceptLicense -ExpectedType Switch -IsRequired $false)
-			Write-Output -InputObject (New-DynamicOption -Category $category -Name $script:Detailed -ExpectedType Switch -IsRequired $false)
 		}
 		Install {
 			Write-Output -InputObject (New-DynamicOption -Category $category -Name $script:AcceptLicense -ExpectedType Switch -IsRequired $false)
-			Write-Output -InputObject (New-DynamicOption -Category $category -Name $script:Detailed -ExpectedType Switch -IsRequired $false)
 		}
 	}
 }

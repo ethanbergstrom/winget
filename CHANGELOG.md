@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.1.0 - 2023-06-04 - Leverage official WinGet module and PowerShell 5.1 Deprecation
+### Changed
+* Interaction with the underlying WinGet provider now handled by the official Microsoft PowerShell module
+* Package ID search is now case-insensitive
+### Removed
+* Due to the official Microsoft PowerShell module only supporting PowerShell v7+, this provider will no longer support PowerShell 5.1 or other pre-PowerShell v7 platforms
+* Due to no longer supporting PowerShell 5.1, PowerShell Desired State Configuration is no longer supported either
+* Additional package metadata is not currently supported by the official WinGet PowerShell module, so removing support for the `-Detailed` switch
+
 ## 0.0.8 - 2022-05-14 - Performance Improvement
 ### Changed
 * No longer include package summary and download URL in package data by default, now accessible with the `-Detailed` switch
@@ -40,7 +49,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 * Merged in structural changes from `ChocolateyGet`
-* WinGet CLI interaction now handled via the PowerShell Crescendo module `Cobalt`
+* WinGet interaction now handled via the PowerShell module `Microsoft.WinGet.Client`
 
 ## 0.0.1 - 2020-05-20 - Initial Release
 ### Added

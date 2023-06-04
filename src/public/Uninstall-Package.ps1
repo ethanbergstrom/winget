@@ -22,13 +22,12 @@ function Uninstall-Package {
 
 	$WinGetParams = @{
 		ID = $Matches.name
+		Version = $Matches.version
 		Source = $Matches.source
 	}
 
-	Cobalt\Uninstall-WinGetPackage @WinGetParams
+	Microsoft.WinGet.Client\Uninstall-WinGetPackage @WinGetParams
 
-	# Cobalt doesn't return any output on successful uninstallation, so we have to make up a new SWID to satisfy PackageManagement
-	# Cobalt/WinGet doesn't take verion information on uninstall, but the SWID needs it
-	$WinGetParams.Version = $Matches.version
+	# Microsoft.WinGet.Client doesn't return any package data on successful uninstallation, so we have to make up a new SWID to satisfy PackageManagement
 	ConvertTo-SoftwareIdentity -InputObject @($WinGetParams)
 }

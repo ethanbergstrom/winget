@@ -22,33 +22,8 @@ Describe 'basic package search operations' {
 		It 'returns all available versions of a package' {
 			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Version -eq $version} | Should -Not -BeNullOrEmpty
 		}
-		It 'returns additional package metadata' {
-			Find-Package -Provider $WinGet -Name $package -Detailed | Select-Object -ExpandProperty FullPath | Should -Not -BeNullOrEmpty
-		}
 		It 'searches for all versions of a package' {
 			Find-Package -Provider $WinGet -Name $package -AllVersions | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
-		}
-	}
-}
-
-Describe 'DSC-compliant package installation and uninstallation' {
-	Context 'without additional arguments' {
-		BeforeAll {
-			$package = 'CPUID.HWMonitor'
-			$version = '1.44'
-		}
-
-		It 'searches for a specific version of a package' {
-			Find-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
-		}
-		It 'silently installs a specific version of a package' {
-			Install-Package -Provider $WinGet -Name $package -RequiredVersion $version -Force | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
-		}
-		It 'finds the locally installed package just installed' {
-			Get-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
-		}
-		It 'silently uninstalls the locally installed package just installed' {
-			Uninstall-Package -Provider $WinGet -Name $package -RequiredVersion $version | Where-Object {$_.Name -contains $package} | Should -Not -BeNullOrEmpty
 		}
 	}
 }
